@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<module>
+	<name>cardgatedirectebanking</name>
+	<displayName><![CDATA[CardGate SofortBanking]]></displayName>
+	<version><![CDATA[1.6.11]]></version>
+	<description><![CDATA[Accepteert betalingen met CardGate SofortBanking]]></description>
+	<author><![CDATA[CardGate]]></author>
+	<tab><![CDATA[payments_gateways]]></tab>
+	<confirmUninstall><![CDATA[Weet u zeker dat u uw details wilt verwijderen?]]></confirmUninstall>
+	<is_configurable>0</is_configurable>
+	<need_instance>1</need_instance>
+	<limited_countries></limited_countries>
+</module>
