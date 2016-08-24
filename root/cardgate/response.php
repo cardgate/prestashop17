@@ -12,6 +12,7 @@
  */
 # CONSTANTES
 # 
+
 if ( empty( $_REQUEST['billing_option'] ) || $_REQUEST['billing_option'] == '' ) {
     exit( 'invalid request!' );
 } else {
@@ -204,6 +205,8 @@ if ( $_mr->__isSafe() ) {
         $cart = new Cart( $cartId );
 
         $total = $cart->getOrderTotal( true, 3 );
+ var_dump($total);
+die;       
         $sStatus = $_mr->getStatus();
 
         switch ( $sStatus ) {

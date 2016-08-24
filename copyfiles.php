@@ -38,24 +38,30 @@ function recurse_copy( $src, $dst, $is_dir ) {
     if ( $is_dir ) {
         // copy directory
         if ( is_dir( $src ) ) {
-            $dir = opendir( $src );
-            @mkdir( $dst );
-            while ( false !== ( $file = readdir( $dir )) ) {
-                if ( ( $file != '.' ) && ( $file != '..' ) ) {
-                    if ( is_dir( $src . '/' . $file ) ) {
-                        recurse_copy( $src . '/' . $file, $dst . '/' . $file , true);
-                    } else {
-                        copy( $src . '/' . $file, $dst . '/' . $file );
+            if ( $src != '.svn' ) {
+                $dir = opendir( $src );
+                @mkdir( $dst );
+                while ( false !== ( $file = readdir( $dir )) ) {
+                    if ( ( $file != '.' ) && ( $file != '..' ) ) {
+                        if ( is_dir( $src . '/' . $file ) ) {
+                            recurse_copy( $src . '/' . $file, $dst . '/' . $file, true );
+                        } else {
+                            if ( strpos( $file, '.DS_Store' ) === false ) {
+                                copy( $src . '/' . $file, $dst . '/' . $file );
+                            }
+                        }
                     }
                 }
+                closedir( $dir );
             }
-            closedir( $dir );
         } else {
             echo 'dir ' . $src . ' is not found!';
         }
     } else {
-        // copy file
-        copy( $src , $dst );
+        if ( strpos( $src, '.DS_Store' ) === false ) {
+            // copy file
+            copy( $src, $dst );
+        }
     }
 }
   
@@ -73,55 +79,55 @@ function data_element( $src, $dst, $is_dir = false ) {
 $data = array();
 
 $src = '../modules/cardgate/';
-$dst = 'cardgate/';
+$dst = 'root/cardgate/';
 $is_dir = true;
 array_push( $data, data_element( $src, $dst, $is_dir ) );
 $src = '../modules/cardgateafterpay/';
-$dst = 'cardgateafterpay/';
+$dst = 'root/cardgateafterpay/';
 $is_dir = true;
 array_push( $data, data_element( $src, $dst, $is_dir ) );
 $src = '../modules/cardgatebanktransfer/';
-$dst = 'cardgatebanktransfer/';
+$dst = 'root/cardgatebanktransfer/';
 $is_dir = true;
 array_push( $data, data_element( $src, $dst, $is_dir ) );
 $src = '../modules/cardgatebitcoin/';
-$dst = 'cardgatebitcoin/';
+$dst = 'root/cardgatebitcoin/';
 $is_dir = true;
 array_push( $data, data_element( $src, $dst, $is_dir ) );
 $src = '../modules/cardgatecreditcard/';
-$dst = 'cardgatecreditcard/';
+$dst = 'root/cardgatecreditcard/';
 $is_dir = true;
 array_push( $data, data_element( $src, $dst, $is_dir ) );
 $src = '../modules/cardgatedirectdebit/';
-$dst = 'cardgatedirectdebit/';
+$dst = 'root/cardgatedirectdebit/';
 $is_dir = true;
 array_push( $data, data_element( $src, $dst, $is_dir ) );
 $src = '../modules/cardgatedirectebanking/';
-$dst = 'cardgatedirectebanking/';
+$dst = 'root/cardgatedirectebanking/';
 $is_dir = true;
 array_push( $data, data_element( $src, $dst, $is_dir ) );
 $src = '../modules/cardgategiropay/';
-$dst = 'cardgategiropay/';
+$dst = 'root/cardgategiropay/';
 $is_dir = true;
 array_push( $data, data_element( $src, $dst, $is_dir ) );
 $src = '../modules/cardgateideal/';
-$dst = 'cardgateideal/';
+$dst = 'root/cardgateideal/';
 $is_dir = true;
 array_push( $data, data_element( $src, $dst, $is_dir ) );
 $src = '../modules/cardgateklarna/';
-$dst = 'cardgateklarna/';
+$dst = 'root/cardgateklarna/';
 $is_dir = true;
 array_push( $data, data_element( $src, $dst, $is_dir ) );
 $src = '../modules/cardgatemc/';
-$dst = 'cardgatemc/';
+$dst = 'root/cardgatemc/';
 $is_dir = true;
 array_push( $data, data_element( $src, $dst, $is_dir ) );
 $src = '../modules/cardgatepaypal/';
-$dst = 'cardgatepaypal/';
+$dst = 'root/cardgatepaypal/';
 $is_dir = true;
 array_push( $data, data_element( $src, $dst, $is_dir ) );
 $src = '../modules/cardgateprzelewy24/';
-$dst = 'cardgateprzelewy24/';
+$dst = 'root/cardgateprzelewy24/';
 $is_dir = true;
 array_push( $data, data_element( $src, $dst, $is_dir ) );
 
@@ -141,7 +147,7 @@ foreach ( $data as $k => $v ) {
 echo 'files copied<br>';
 
 // Get real path for our folder
-$rootPath = '/home/richard/websites/prestashop16/htdocs/_plugin/cardgate';
+$rootPath = '/home/richard/websites/prestashop16/htdocs/_plugin/root';
 $filename = 'cardgate.zip';
 
 zipfiles($filename, $rootPath);
