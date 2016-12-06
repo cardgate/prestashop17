@@ -17,11 +17,7 @@ if ( empty( $_REQUEST['billing_option'] ) || $_REQUEST['billing_option'] == '' )
 } else {
     $option = $_REQUEST['billing_option'];
 }
-switch ( $option ) {
-    case 'mc':
-        $option = 'mistercash';
-        break;
-}
+
 if ( $option == 'mistercash' ) {
     $option = 'mc';
 }
@@ -32,7 +28,7 @@ if ( $option == 'sofortbanking' ) {
 require(dirname( __FILE__ ) . '/../../config/config.inc.php');
 require(dirname( __FILE__ ) . $option . '/cardgate' . $option . '.php');
 
-define( 'LOG_TRANSACTIONS', false ); // true ou false, write log of response or not
+define( 'LOG_TRANSACTIONS', false ); // true or false, write log of response or not
 define( 'CARDGATE_LOG', dirname( __FILE__ ) . '/cardgate' . $option . '.log' ); // File for testing response answer
 define( 'EMAIL_NOTIFICATION_ADDRESS', '' ); // Email
 // add Link Object to Context if is does not exist yet
@@ -275,7 +271,7 @@ if ( $_mr->__isSafe() ) {
                 $oOrder->total_shipping_tax_incl = $newShippingCosts;
 
                 $oOrder->total_paid_tax_excl = $oOrder->total_paid_tax_excl + $extraCostsExcl;
-                $oOrder->total_paid_tax_incl = $oOrder->total_paid_real = $oOrder->total_paid = $oOrder->total_paid + $extraCosts;
+                $oOrder->total_paid_tax_incl = $oOrder->total_paid_real = $oOrder->total_paid = $oOrder->total_paid + floatval($extraCosts);
 
                 $oOrder->update();
             }

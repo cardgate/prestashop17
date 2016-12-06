@@ -46,7 +46,7 @@
 	</select>
         
         {foreach from=$fields key=name item=value}
-            <input type="hidden" name="{$name}" value="{$value}">
+            <input type="hidden" name="{$name}" value='{$value}'>
 	{/foreach}
 </p>
 

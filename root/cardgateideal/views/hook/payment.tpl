@@ -23,10 +23,6 @@
 *  International Registered Trademark & Property of PrestaShop SA
 *}
 
-<div class="cardgate_error">
-	<p><b>{$idealerror}</b></p>
-</div>
-
 {if $smarty.const._PS_VERSION_ >= 1.6}
 
 <div class="row">

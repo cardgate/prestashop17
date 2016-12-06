@@ -8,12 +8,11 @@ require_once "cardgatepayment.php";
 class Cardgate extends PaymentModule {
 
     public function __construct() {
-
         $this->name = 'cardgate';
         $this->paymentcode = 'cardgate';
         $this->paymentname = 'CardGate';
         $this->tab = 'payments_gateways';
-        $this->version = '1.6.17';
+        $this->version = '1.6.18';
         $this->author = 'CardGate';
         $this->bootstrap = true;
         $this->currencies = true;
@@ -61,6 +60,7 @@ class Cardgate extends PaymentModule {
             }
 
             $order_state->send_email = true;
+            $order_state->template = 'payment';
             $order_state->color = 'RoyalBlue';
             $orderState->hidden = false;
             $orderState->delivery = false;

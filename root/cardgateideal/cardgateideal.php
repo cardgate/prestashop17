@@ -91,7 +91,5 @@ class Cardgateideal extends CardgatePayment {
             );
         }
         return $aBanks;
-    }
-    
-
+    }    
 }

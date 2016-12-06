@@ -2,7 +2,7 @@
 
 class CardgatePayment extends PaymentModule {
 
-    var $version = '1.6.17';
+    var $version = '1.6.18';
     var $tab = 'payments_gateways';
     var $author = 'CardGate';
     var $shop_version = _PS_VERSION_;
@@ -93,7 +93,6 @@ class CardgatePayment extends PaymentModule {
 
     public function paymentData() {
 
-        //$payment = strtoupper( $this->paymentcode );
         if ( Configuration::get( 'CARDGATE_MODE' ) == 1 ) {
             $sPrefix = 'TEST';
         } else {
@@ -102,7 +101,6 @@ class CardgatePayment extends PaymentModule {
         $extrafee = $this->extraCosts( $this->extra_cost );
         $cart = $this->context->cart;
         
-        //$order_total = $cart->getOrderTotal( true, Cart::BOTH ) + $this->extraCosts($this->extra_cost);
         $cg_total = number_format( (($cart->getOrderTotal( true, Cart::BOTH ) + $extrafee) * 100 ), 0, '.', '' );
         $site_id = Configuration::get( 'CARDGATE_SITEID' );
         $ref = date( "YmdHis" ) . $cart->id;
@@ -169,7 +167,8 @@ class CardgatePayment extends PaymentModule {
         $data['test'] = Configuration::get( 'CARDGATE_MODE' );
         $data['language'] = $this->context->language->iso_code;
         $data['hash'] = $hash;
-        $data['return_url'] = Tools::getHttpHost( true, true ) . __PS_BASE_URI__ . 'index.php?controller=order-confirmation&id_cart=' . ( int ) $cart->id . '&id_module=' . ( int ) $this->module->id . '&id_order=' . $this->module->currentOrder . '&key=' . $customer->secure_key;
+        //$data['return_url'] = Tools::getHttpHost( true, true ) . __PS_BASE_URI__ . 'index.php?controller=order-confirmation&id_cart=' . ( int ) $cart->id . '&id_module=' . ( int ) $this->module->id . '&id_order=' . $this->module->currentOrder . '&key=' . $customer->secure_key;
+        $data['return_url'] = Tools::getHttpHost( true, true ) . __PS_BASE_URI__ . 'index.php?controller=order-confirmation&id_cart=' . ( int ) $cart->id . '&key=' . $customer->secure_key;
         $data['return_url_failed'] = Tools::getHttpHost( true, true ) . __PS_BASE_URI__ . 'index.php?controller=order&step=3';
         $data['amount'] = $cg_total;
         $data['currency'] = $currency->iso_code;
@@ -192,8 +191,6 @@ class CardgatePayment extends PaymentModule {
         if ( count( $cartitems ) > 0 ) {
             $data['cartitems'] =  json_encode($cartitems, JSON_HEX_APOS | JSON_HEX_QUOT);
         }
-        
-        // $data['bypass_simulator'] = 1;
 
         return $data;
     }
