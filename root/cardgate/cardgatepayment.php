@@ -41,7 +41,7 @@ class CardgatePayment extends PaymentModule {
         $this->smarty->assign( 'logoname', $this->logoname );
 
         $this->smarty->assign( 'extracosts', $this->extraCosts( $this->extra_cost ) );
-        $this->smarty->assign( 'paymenttext', $this->l('Pay with') . ' ' . $this->paymentname );
+        $this->smarty->assign( 'paymenttext', $this->l( 'Pay with' ) . ' ' . $this->paymentname );
 
         $this->smarty->assign( '_url', $this->_url );
         $this->smarty->assign( 'imageurl', $this->imageurl );
@@ -61,18 +61,14 @@ class CardgatePayment extends PaymentModule {
 
     public function displayConf() {
 
-        $this->_html = $this->displayConfirmation( $this->l('Settings updated') );
+        $this->_html = $this->displayConfirmation( $this->l( 'Settings updated' ) );
     }
 
     function get_url() {
-        if ( !empty( $_SERVER['CGP_GATEWAY_URL'] ) ) {
-            return $_SERVER['CGP_GATEWAY_URL'];
+        if ( Configuration::get( 'CARDGATE_MODE' ) == 1 ) {
+            return "https://secure-staging.curopayments.net/gateway/cardgate/";
         } else {
-            if ( Configuration::get( 'CARDGATE_MODE' ) == 1 ) {
-                return "https://secure-staging.curopayments.net/gateway/cardgate/";
-            } else {
-                return "https://secure.curopayments.net/gateway/cardgate/";
-            }
+            return "https://secure.curopayments.net/gateway/cardgate/";
         }
     }
 
@@ -100,11 +96,11 @@ class CardgatePayment extends PaymentModule {
         }
         $extrafee = $this->extraCosts( $this->extra_cost );
         $cart = $this->context->cart;
-        
+
         $cg_total = number_format( (($cart->getOrderTotal( true, Cart::BOTH ) + $extrafee) * 100 ), 0, '.', '' );
         $site_id = Configuration::get( 'CARDGATE_SITEID' );
         $ref = date( "YmdHis" ) . $cart->id;
-        $extra = $cart->id.'|'.$extrafee;
+        $extra = $cart->id . '|' . $extrafee;
         $hash = md5( $sPrefix . $site_id . $cg_total . $ref . Configuration::get( 'CARDGATE_HASH_KEY' ) );
         $address = new Address( $cart->id_address_invoice );
         $countryObj = new Country( $address->id_country );
@@ -121,7 +117,7 @@ class CardgatePayment extends PaymentModule {
             $item['quantity'] = $product['cart_quantity'];
             $item['sku'] = $product['id_product'];
             $item['name'] = $product['name'];
-            $item['price'] = round($product['price_wt'] * 100,0);
+            $item['price'] = round( $product['price_wt'] * 100, 0 );
             $item['vat'] = $vat;
             $item['vat_amount'] = round( $vat_amount * 100, 0 );
             $item['vat_inc'] = 1;
@@ -137,23 +133,23 @@ class CardgatePayment extends PaymentModule {
             $carrier = new Carrier( $cart->id_carrier );
             $item = array();
             $item['quantity'] = 1;
-            $item['sku'] = 'SHIPPING_'.$carrier->id_reference;
+            $item['sku'] = 'SHIPPING_' . $carrier->id_reference;
             $item['name'] = $carrier->name;
-            $item['price'] = round($shippingcost * 100,0);
+            $item['price'] = round( $shippingcost * 100, 0 );
             $item['vat'] = 0;
             $item['vat_amount'] = 0;
             $item['vat_inc'] = 1;
             $item['type'] = 2;
             $cartitems[] = $item;
         }
-        
+
         if ( $extrafee > 0 ) {
             $carrier = new Carrier( $cart->id_carrier );
             $item = array();
             $item['quantity'] = 1;
             $item['sku'] = 'TRANSACTIONFEE';
             $item['name'] = 'Transactie kosten';
-            $item['price'] = round($extrafee * 100,0);
+            $item['price'] = round( $extrafee * 100, 0 );
             $item['vat'] = 0;
             $item['vat_amount'] = 0;
             $item['vat_inc'] = 1;
@@ -167,7 +163,6 @@ class CardgatePayment extends PaymentModule {
         $data['test'] = Configuration::get( 'CARDGATE_MODE' );
         $data['language'] = $this->context->language->iso_code;
         $data['hash'] = $hash;
-        //$data['return_url'] = Tools::getHttpHost( true, true ) . __PS_BASE_URI__ . 'index.php?controller=order-confirmation&id_cart=' . ( int ) $cart->id . '&id_module=' . ( int ) $this->module->id . '&id_order=' . $this->module->currentOrder . '&key=' . $customer->secure_key;
         $data['return_url'] = Tools::getHttpHost( true, true ) . __PS_BASE_URI__ . 'index.php?controller=order-confirmation&id_cart=' . ( int ) $cart->id . '&key=' . $customer->secure_key;
         $data['return_url_failed'] = Tools::getHttpHost( true, true ) . __PS_BASE_URI__ . 'index.php?controller=order&step=3';
         $data['amount'] = $cg_total;
@@ -189,7 +184,7 @@ class CardgatePayment extends PaymentModule {
         $data['shop_version'] = $this->shop_version;
 
         if ( count( $cartitems ) > 0 ) {
-            $data['cartitems'] =  json_encode($cartitems, JSON_HEX_APOS | JSON_HEX_QUOT);
+            $data['cartitems'] = json_encode( $cartitems, JSON_HEX_APOS | JSON_HEX_QUOT );
         }
 
         return $data;
