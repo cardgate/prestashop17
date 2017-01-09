@@ -1,6 +1,6 @@
 <?php
 
-if ( file_exists( dirname(__FILE__).'/../cardgate/cardgate.php' )) {
+if ( file_exists( dirname(__FILE__).'/../cardgate/cardgate.php')) {
     require_once dirname(__FILE__).'/../cardgate/cardgate.php';
 } else {
     $GLOBALS['CARDGATENOTFOUND']=1;
@@ -37,15 +37,24 @@ class Cardgateideal extends CardgatePayment {
         $this->name = 'cardgateideal';
         $this->logoname = 'ideal';
         $this->imageurl = 'https://gateway.cardgateplus.com/images/logo' . $this->paymentcode . '.gif';
-        $this->extra_cost = Configuration::get( 'CARDGATE_' . strtoupper( $this->paymentcode) . '_EXTRACOST' );
+        $this->extra_cost = Configuration::get('CARDGATE_' . strtoupper( $this->paymentcode) . '_EXTRACOST');
+        $this->controllers = array('validation');
+        $this->is_eu_compatible = 1;
+        $this->currencies = true;
+        $this->currencies_mode = 'checkbox';
+        $this->bootstrap = true;
          
         parent::__construct();
         
-        $this->page = basename( __FILE__, '.php' );
+        $this->page = basename( __FILE__, '.php');
         $this->displayName = $this->l('CardGate iDEAL');
         $this->description = $this->l('Accepts payments with CardGate iDEAL.');
         $this->confirmUninstall = $this->l('Are you sure you want to delete your details?');
         $this->_url = $this->get_url();
+        
+        if ( !count( Currency::checkPaymentCurrencies( $this->id ) ) ) {
+            $this->warning = $this->l('No currency has been set for this module.');
+        }
         
         $total = 0;
         $rate = 'EUR';
@@ -55,7 +64,7 @@ class Cardgateideal extends CardgatePayment {
             $total = round( Tools::convertPrice( $GLOBALS['cart']->getOrderTotal( true, 3 ), $currency ), 2 );
             $rate = $currency->iso_code;
         }
-        $id_lang = (!isset( $cookie ) OR ! is_object( $cookie )) ? intval( Configuration::get( 'PS_LANG_DEFAULT' ) ) : intval( $cookie->id_lang );
+        $id_lang = (!isset( $cookie ) OR ! is_object( $cookie )) ? intval( Configuration::get('PS_LANG_DEFAULT') ) : intval( $cookie->id_lang );
         
         if ( isset($GLOBALS['CARDGATENOTFOUND']) ) $this->warning = $this->l('The CardGate module is not found.');
     }
@@ -63,32 +72,21 @@ class Cardgateideal extends CardgatePayment {
     
     public function getBanks() {
         
-        $url = 'https://gateway.cardgateplus.com/cache/idealDirectoryRabobank.dat';
-         
-        if ( !ini_get( 'allow_url_fopen' ) || !function_exists( 'file_get_contents' ) ) {
-            $result = false;
-        } else {
-            $result = file_get_contents( $url );
-        }
+       try {
 
-        $aBanks = array();
+            require_once(str_replace('cardgateideal','',dirname(__FILE__)).'cardgate/cardgate-clientlib-php/init.php');
 
-        if ( $result ) {
-            $aBanks = unserialize( $result );
-            $aBanks[0] = $this->l('-Choose your bank please-');
-        }
+            $oCardGate = new cardgate\api\Client( ( int ) Configuration::get('CARDGATE_MERCHANT_ID'), Configuration::get('CARDGATE_MERCHANT_API_KEY'), (Configuration::get('CARDGATE_TEST_MODE') == 1 ? TRUE : FALSE ) );
+            $oCardGate->setIp( $_SERVER['REMOTE_ADDR'] );
 
-        if ( count( $aBanks ) < 1 ) {
-            $aBanks = array( '0031' => 'ABN Amro',
-                '0091' => 'Friesland Bank',
-                '0721' => 'ING Bank',
-                '0021' => 'Rabobank',
-                '0751' => 'SNS Bank',
-                '0761' => 'ASN Bank',
-                '0771' => 'SNS Regio Bank',
-                '0511' => 'Triodos Bank',
-                '0161' => 'Van Landschot Bank'
-            );
+            $aIssuers = $oCardGate->methods()->get( cardgate\api\Method::IDEAL )->getIssuers();
+            $aBanks = array();
+            foreach($aIssuers as $aIssuer){
+              $aBanks[$aIssuer['id']] = $aIssuer['name'];
+            }
+
+        } catch ( cardgate\api\Exception $oException_ ) {
+            $aBanks[0] = htmlspecialchars( $oException_->getMessage() );
         }
         return $aBanks;
     }    

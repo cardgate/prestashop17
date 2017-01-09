@@ -86,6 +86,10 @@ $src = '../modules/cardgateafterpay/';
 $dst = 'root/cardgateafterpay/';
 $is_dir = true;
 array_push( $data, data_element( $src, $dst, $is_dir ) );
+$src = '../modules/cardgatebancontact/';
+$dst = 'root/cardgatebancontact/';
+$is_dir = true;
+array_push( $data, data_element( $src, $dst, $is_dir ) );
 $src = '../modules/cardgatebanktransfer/';
 $dst = 'root/cardgatebanktransfer/';
 $is_dir = true;
@@ -102,10 +106,6 @@ $src = '../modules/cardgatedirectdebit/';
 $dst = 'root/cardgatedirectdebit/';
 $is_dir = true;
 array_push( $data, data_element( $src, $dst, $is_dir ) );
-$src = '../modules/cardgatedirectebanking/';
-$dst = 'root/cardgatedirectebanking/';
-$is_dir = true;
-array_push( $data, data_element( $src, $dst, $is_dir ) );
 $src = '../modules/cardgategiropay/';
 $dst = 'root/cardgategiropay/';
 $is_dir = true;
@@ -118,16 +118,16 @@ $src = '../modules/cardgateklarna/';
 $dst = 'root/cardgateklarna/';
 $is_dir = true;
 array_push( $data, data_element( $src, $dst, $is_dir ) );
-$src = '../modules/cardgatemc/';
-$dst = 'root/cardgatemc/';
-$is_dir = true;
-array_push( $data, data_element( $src, $dst, $is_dir ) );
 $src = '../modules/cardgatepaypal/';
 $dst = 'root/cardgatepaypal/';
 $is_dir = true;
 array_push( $data, data_element( $src, $dst, $is_dir ) );
 $src = '../modules/cardgateprzelewy24/';
 $dst = 'root/cardgateprzelewy24/';
+$is_dir = true;
+array_push( $data, data_element( $src, $dst, $is_dir ) );
+$src = '../modules/cardgatesofortbanking/';
+$dst = 'root/cardgatesofortbanking/';
 $is_dir = true;
 array_push( $data, data_element( $src, $dst, $is_dir ) );
 
@@ -147,7 +147,7 @@ foreach ( $data as $k => $v ) {
 echo 'files copied<br>';
 
 // Get real path for our folder
-$rootPath = '/home/richard/websites/prestashop16/htdocs/_plugin/root';
+$rootPath = '/home/richard/websites/prestashop17/htdocs/_plugin/root';
 $filename = 'cardgate.zip';
 
 zipfiles($filename, $rootPath);

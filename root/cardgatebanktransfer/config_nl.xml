@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <module>
-	<name>cardgatebanktransfer</name>
-	<displayName><![CDATA[CardGate Bankoverboeking]]></displayName>
-	<version><![CDATA[1.6.17]]></version>
-	<description><![CDATA[Accepteert betalingen met CardGate Bankoverboeking]]></description>
-	<author><![CDATA[CardGate]]></author>
-	<tab><![CDATA[payments_gateways]]></tab>
+    <name>cardgatebanktransfer</name>
+    <displayName><![CDATA[CardGate Bankoverboeking]]></displayName>
+    <version><![CDATA[1.7.0]]></version>
+    <description><![CDATA[Accepteert betalingen met CardGate Bankoverboeking]]></description>
+    <author><![CDATA[CardGate]]></author>
+    <tab><![CDATA[payments_gateways]]></tab>
 	<confirmUninstall><![CDATA[Weet u zeker dat u uw details wilt verwijderen?]]></confirmUninstall>
-	<is_configurable>0</is_configurable>
-	<need_instance>1</need_instance>
+    <is_configurable>0</is_configurable>
+    <need_instance>1</need_instance>
 	<limited_countries></limited_countries>
 </module>

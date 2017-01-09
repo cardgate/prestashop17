@@ -12,18 +12,18 @@
  */
 # CONSTANTES
 # 
-if ( empty( $_REQUEST['billing_option'] ) || $_REQUEST['billing_option'] == '' ) {
+if ( empty( $_REQUEST['pt'] ) || $_REQUEST['pt'] == '' ) {
     exit( 'invalid request!' );
 } else {
-    $option = $_REQUEST['billing_option'];
+    $option = $_REQUEST['pt'];
 }
 
-if ( $option == 'mistercash' ) {
-    $option = 'mc';
+switch ( $option ) {
+    case 'idealpro';
+        $option = 'ideal';
+        break;
 }
-if ( $option == 'sofortbanking' ) {
-    $option = 'directebanking';
-}
+
 
 require(dirname( __FILE__ ) . '/../../config/config.inc.php');
 require(dirname( __FILE__ ) . $option . '/cardgate' . $option . '.php');
@@ -41,58 +41,35 @@ if ( !is_object( Context::getContext()->link ) ) {
 class cardgate_response {
 
     var $status = '';
-    var $post = array();
+    var $get = array();
     var $option = '';
-    var $required_filed = array( 'DATAS', 'IS_VALID', 'OWNER', 'CB_TYPE', 'CLEF', 'ORDER_ID', 'TOTAL_AMOUNT', 'CURRENCY', 'UID', 'VERSION' );
-    var $response_status = array(
-        0 => 'Transaction in progress', // Pending
-        100 => 'Authorization successful',
-        150 => '3D secure status "Y" (yes), waiting for 3D secure authentication',
-        152 => '3D secure status "N" (no)',
-        154 => '3D secure status "U" (unknown)',
-        156 => '3D secure status "E" (error)',
-        200 => 'Transaction successful',
-        210 => 'Recurring transaction successful',
-        300 => 'Transaction failed',
-        301 => 'Transaction failed due to anti fraud system',
-        310 => 'Recurring transaction failed',
-        350 => 'Transaction failed, time out for 3D secure authentication',
-        400 => 'Refund to customer',
-        410 => 'Chargeback by customer',
-        700 => 'Transaction waits for user action' );
 
-    function __construct( $post = '', $option ) {
-        $post = $post == '' ? $_REQUEST : $post;
+    function __construct( $get = '', $option ) {
+        $get = $get == '' ? $_GET : $get;
 
-        $this->post = $post;
+        $this->get = $get;
         $this->option = $option;
         if ( !$this->__isSafe() ) {
-            $this->__debug( 'hashcheck failed.', $this->post );
+            $this->__debug( 'hashcheck failed.', $this->get );
         }
 
-        $this->__log( $this->post );
+        $this->__log( $this->get );
     }
 
     function __isSafe() {
 
-        $extraData = explode( '|', $_REQUEST['extra'] );
-        $cartId = $extraData[0];
-        $option = strtoupper( $this->post['billing_option'] );
-        $cart = new Cart( $cartId );
-        $amount = $this->post['amount'];
-        $currency = new Currency( ( int ) ($cart->id_currency) );
-        $site_id = Configuration::get( 'CARDGATE_SITEID' );
+        $amount = $this->get['amount'];
+        $site_id = Configuration::get( 'CARDGATE_SITE_ID' );
         $hashKey = Configuration::get( 'CARDGATE_HASH_KEY' );
 
-        $hashString = ($this->post['is_test'] == 1 ? 'TEST' : '') .
-                $this->post['transaction_id'] .
-                $this->post['currency'] .
+        $hashString = ($this->get['testmode'] == 1 ? 'TEST' : '') .
+                $this->get['transaction'] .
+                $this->get['currency'] .
                 $amount .
-                $this->post['ref'] .
-                $this->post['status'] .
+                $this->get['reference'] .
+                $this->get['code'] .
                 $hashKey;
-
-        return (md5( $hashString ) == $this->post['hash']);
+        return (md5( $hashString ) == $this->get['hash']);
     }
 
     # Notification about problems via email
@@ -120,36 +97,24 @@ class cardgate_response {
         }
     }
 
-    function error_status() {
-
-        $return_msg = 'Undifine error';
-        foreach ( $this->response_status as $row => $key ) {
-            if ( $row == $this->post['status'] ) {
-                $return_msg = $key;
-                break;
-            }
-        }
-        return $return_msg;
-    }
-
     # Return Number of Cart
 
     function getDataSend() {
-        return $this->post['ref'];
+        return $this->get['ref'];
     }
 
     # Check if status of transaction == 200 - True
 
     function isValid() {
-        return $this->post['status'] == 'succes';
-//			return $this->post['status'] == 200;
+        return $this->get['status'] == 'succes';
+//			return $this->get['status'] == 200;
     }
 
     # Check other status of transaction. Return True if transaction failure
     #                                    Return False if transaction wait other signal
 
     function isError() {
-        if ( ($this->post['status'] == 300) or ( $this->post['status'] == 156) or ( $this->post['status'] == 301) or ( $this->post['status'] == 310) or ( $this->post['status'] == 350) ) {
+        if ( ($this->get['status'] == 300) or ( $this->get['status'] == 156) or ( $this->get['status'] == 301) or ( $this->get['status'] == 310) or ( $this->get['status'] == 350) ) {
             return true;
         } else {
             return false;
@@ -157,8 +122,7 @@ class cardgate_response {
     }
 
     function getStatus() {
-        $status = $this->post['status'];
-        $status_id = $this->post['status_id'];
+        $status = $this->get['code'];
 
         if ( $status == '0' ) {
             $statusResult = 'pending';
@@ -167,7 +131,7 @@ class cardgate_response {
             $statusResult = 'succes';
         }
         if ( $status >= '300' && $status < '400' ) {
-            if ( $status_id == '309' ) {
+            if ( $status == '309' ) {
                 $statusResult = 'canceled';
             } else {
                 $statusResult = 'failed';
@@ -187,111 +151,109 @@ $_mr = new cardgate_response( $_REQUEST, $option );
 
 if ( $_mr->__isSafe() ) {
 
-    if ( isset( $_REQUEST['extra'] ) && isset( $_REQUEST['status'] ) ) {
-        $option = $_mr->option;
 
-        $payment = 'Cardgate' . $option;
+    $option = $_mr->option;
+    $payment = 'Cardgate' . $option;
 
-        $_cardgate = new $payment();
-        $extraData = explode( '|', $_REQUEST['extra'] );
-        $cartId = $extraData[0];
-        $extraCosts = $extraData[1];
+    $_cardgate = new $payment();
+    $extraData = explode( '|', $_REQUEST['reference'] );
+    $cartId = $extraData[1];
+    $extraCosts = floatval($extraData[2]);
 
-        $cart = new Cart( $cartId );
+    $cart = new Cart( $cartId );
 
-        $total = $cart->getOrderTotal( true, 3 );
-        $sStatus = $_mr->getStatus();
+    $total = $cart->getOrderTotal( true, 3 );
+    $sStatus = $_mr->getStatus();
 
+    switch ( $sStatus ) {
+        case 'failed':
+            $newStatus = _PS_OS_ERROR_;
+            break;
+        case 'canceled':
+            $newStatus = _PS_OS_CANCELED_;
+            break;
+        case 'pending';
+            $newStatus = Configuration::get( 'CARDGATE_PENDING' );
+            break;
+        case 'succes':
+            $newStatus = _PS_OS_PAYMENT_;
+            break;
+    }
+
+
+    if ( $cart->OrderExists() ) {
+        $id_order = Order::getOrderByCartId( $cart->id );
+        $oOrder = new Order( $id_order );
+        if ( $oOrder->current_state != _PS_OS_PAYMENT_ && $oOrder->current_state != _PS_OS_ERROR_ ) {
+            $oOrder->setCurrentState( $newStatus );
+            $oOrder->save();
+        }
+    } else {
+        // update payment total with extra fee before making the order
         switch ( $sStatus ) {
             case 'failed':
-                $newStatus = _PS_OS_ERROR_;
+                $message = "Transaction failed";
+                $ln = 'Detail of order Cart = ' . $cartId . ' Message ' . $message . '!';
+                $_cardgate->validateOrder( $cartId, $newStatus, $total, $_cardgate->paymentname . ' Payment', str_replace( '.br.', "<br/>\n", $message ) );
                 break;
             case 'canceled':
-                $newStatus = _PS_OS_CANCELED_;
+                $message = "Transaction canceled";
+                $ln = 'Detail of order Cart = ' . $cartId . ' Message ' . $message . '!';
+                if ( !empty( $_REQUEST['status_id'] ) && $_REQUEST['status_id'] != 309 ) {
+                    $_cardgate->validateOrder( $cartId, $newStatus, $total, $_cardgate->paymentname . ' Payment', str_replace( '.br.', "<br/>\n", $message ) );
+                }
                 break;
-            case 'pending';
-                $newStatus = Configuration::get( 'CARDGATE_PENDING' );
+            case 'pending':
+                $_cardgate->validateOrder( $cartId, $newStatus, $total, $_cardgate->paymentname . ' Payment', NULL, NULL, NULL, false, $cart->secure_key );
                 break;
             case 'succes':
-                $newStatus = _PS_OS_PAYMENT_;
+                    $st = Configuration::get( 'CARDGATE_PENDING' );
+                    $_cardgate->validateOrder( $cartId, $st, $total, $_cardgate->paymentname . ' Payment', NULL, NULL, ( int ) $cart->id_currency, false, $cart->secure_key );
                 break;
         }
 
+        $result = Db::getInstance()->ExecuteS( 'SELECT `id_order` FROM `' . _DB_PREFIX_ . 'orders` WHERE `id_cart` = ' . intval( $cartId ) );
 
-        if ( $cart->OrderExists() ) {
-            $id_order = Order::getOrderByCartId( $cart->id );
-            $oOrder = new Order( $id_order );
-            if ( $oOrder->current_state != _PS_OS_PAYMENT_ && $oOrder->current_state != _PS_OS_ERROR_ ) {
-                $oOrder->setCurrentState( $newStatus );
-                $oOrder->save();
-            }
+        if ( empty( $result[0] ) ) {
+            $id_order = 0;
         } else {
-            // update payment total with extra fee before making the order
-
-            switch ( $sStatus ) {
-                case 'failed':
-                    $message = "Transaction failed";
-                    $ln = 'Detail of order Cart = ' . $cartId . ' Message ' . $message . '!';
-                    $_cardgate->validateOrder( $cartId, $newStatus, $total, $_cardgate->paymentname . ' Payment', str_replace( '.br.', "<br/>\n", $message ) );
-                    break;
-                case 'canceled':
-                    $message = "Transaction canceled";
-                    $ln = 'Detail of order Cart = ' . $cartId . ' Message ' . $message . '!';
-                    if ( !empty( $_REQUEST['status_id'] ) && $_REQUEST['status_id'] != 309 ) {
-                        $_cardgate->validateOrder( $cartId, $newStatus, $total, $_cardgate->paymentname . ' Payment', str_replace( '.br.', "<br/>\n", $message ) );
-                    }
-                    break;
-                case 'pending':
-                    $_cardgate->validateOrder( $cartId, $newStatus, $total, $_cardgate->paymentname . ' Payment', NULL, NULL, NULL, false, $cart->secure_key );
-                    break;
-                case 'succes':
-                    if ( $extraCosts > 0 ) {
-                        $st = Configuration::get( 'CARDGATE_PENDING' );
-                        $_cardgate->validateOrder( $cartId, $st, $total, $_cardgate->paymentname . ' Payment', NULL, NULL, NULL, false, $cart->secure_key );
-                    } else {
-                        $message = "Transaction succes";
-                        $ln = 'Detail of order Cart = ' . $cartId . ' Message ' . $message . '!';
-                        $_cardgate->validateOrder( $cartId, $newStatus, $total, $_cardgate->paymentname . ' Payment', str_replace( '.br.', "<br/>\n", $message ), NULL, NULL, false, $cart->secure_key );
-                    }
-                    break;
-            }
-
-            $result = Db::getInstance()->ExecuteS( 'SELECT `id_order` FROM `' . _DB_PREFIX_ . 'orders` WHERE `id_cart` = ' . intval( $cartId ) );
             $id_order = $result[0]['id_order'];
             $oOrder = new Order( $id_order );
+        }
 
-            if ( $sStatus != 'canceled' && $extraCosts > 0 ) {
-                $shippingCost = $oOrder->total_shipping;
-                $newShippingCosts = $shippingCost + $extraCosts;
-                $extraCostsExcl = round( $extraCosts / (1 + (21 / 100)), 2 );
+        if ( $sStatus != 'canceled' ) {
 
-                //als de order extra kosten heeft, moeten deze worden toegevoegd. 
-                $oOrder->total_shipping = $newShippingCosts;
-                $oOrder->total_shipping_tax_excl = $oOrder->total_shipping_tax_excl + $extraCostsExcl;
-                $oOrder->total_shipping_tax_incl = $newShippingCosts;
+            $shippingCost = $oOrder->total_shipping;
+            $newShippingCosts = $shippingCost + $extraCosts;
+            $extraCostsExcl = round( $extraCosts / (1 + (21 / 100)), 2 );
 
-                $oOrder->total_paid_tax_excl = $oOrder->total_paid_tax_excl + $extraCostsExcl;
-                $oOrder->total_paid_tax_incl = $oOrder->total_paid_real = $oOrder->total_paid = $oOrder->total_paid + floatval($extraCosts);
+            // add the extra costs to the totals 
+            $oOrder->total_shipping = $newShippingCosts;
+            $oOrder->total_shipping_tax_excl = $oOrder->total_shipping_tax_excl + $extraCostsExcl;
+            $oOrder->total_shipping_tax_incl = $newShippingCosts;
 
-                $oOrder->update();
-            }
-            if ( ($sStatus == 'succes') && ($extraCosts > 0) ) {
-                $result = $oOrder->addOrderPayment( $oOrder->total_paid_tax_incl, 'Unknown', $_REQUEST['transaction_id'] );
-                $orderPayment = OrderPayment::getByOrderId( $oOrder->id );
+            $oOrder->total_paid_tax_excl = $oOrder->total_paid_tax_excl + $extraCostsExcl;
+            $oOrder->total_paid_tax_incl = $oOrder->total_paid_real = $oOrder->total_paid = $oOrder->total_paid + floatval( $extraCosts );
 
-                $history = new OrderHistory();
-                $history->id_order = ( int ) $oOrder->id;
-                $id_order_state = $newStatus;
-                $history->changeIdOrderState( ( int ) $id_order_state, $oOrder, $orderPayment );
-                $res = Db::getInstance()->getRow( '
+            $oOrder->update();
+        }
+        
+        if ( ($sStatus == 'succes') ) {
+            $result = $oOrder->addOrderPayment( $oOrder->total_paid_tax_incl, 'Unknown', $_REQUEST['transaction_id'] );
+            $orderPayment = OrderPayment::getByOrderId( $oOrder->id );
+
+            $history = new OrderHistory();
+            $history->id_order = ( int ) $oOrder->id;
+            $id_order_state = $newStatus;
+            $history->changeIdOrderState( ( int ) $id_order_state, $oOrder, $orderPayment );
+            $res = Db::getInstance()->getRow( '
 			SELECT `invoice_number`, `invoice_date`, `delivery_number`, `delivery_date`
 			FROM `' . _DB_PREFIX_ . 'orders`
 			WHERE `id_order` = ' . ( int ) $oOrder->id );
-                $history->addWithemail();
-            }
+            $history->addWithemail();
         }
-        echo $_REQUEST['transaction_id'] . "." . $_REQUEST['status'];
     }
+    echo $_REQUEST['transaction'] . "." . $_REQUEST['code'];
 } else {
     die( 'Hashcheck failed!' );
 }

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <module>
-    <name>cardgatemc</name>
-    <displayName><![CDATA[CardGateMisterCash]]></displayName>
-    <version><![CDATA[1.5.10]]></version>
-    <description><![CDATA[Accepts payments with CardGate MisterCash.]]></description>
+    <name>cardgatebancontact</name>
+    <displayName><![CDATA[CardGateBancontact]]></displayName>
+    <version><![CDATA[1.6.11]]></version>
+    <description><![CDATA[Accepts payments with CardGate Bancontact.]]></description>
     <author><![CDATA[Richard Schoots]]></author>
     <tab><![CDATA[payments_gateways]]></tab>
     <confirmUninstall><![CDATA[Weet u zeker dat u uw details wilt verwijderen?]]></confirmUninstall>
