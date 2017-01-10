@@ -61,10 +61,9 @@ class CardgatePayment extends PaymentModule {
         
         $extraCosts = Configuration::get( 'CARDGATE_'.strtoupper( $this->paymentcode).'_EXTRACOST' );
         
-        $actionText = $this->l('Pay with').' '.$this->paymentname;
         if ($extraCosts > 0 ){
             $oCurrency = new Currency( $params['cart']->id_currency );
-            $actionText .= ' + '.$oCurrency->sign.' '.number_format($extraCosts, 2);
+            $costText .= ' + '.$oCurrency->sign.' '.number_format($extraCosts, 2);
         }
         
         if ($this->paymentcode == 'ideal'){
@@ -74,11 +73,24 @@ class CardgatePayment extends PaymentModule {
             $additionalInformation = null;
         }
         
+        $display = Configuration::get('CARDGATE_PAYMENT_DISPLAY');
+        if ($display == 'textandlogo' || $display == 'textonly'){
+            $actionText = $this->l('Pay with').' '.$this->paymentname . $costText;
+        } else {
+            $actionText = null;
+        }
+        
+        if ($display == 'textandlogo' || $display == 'logoonly' ){
+            $logo = Media::getMediaPath(_PS_MODULE_DIR_.$this->name.'/logo.gif');
+        } else {
+            $logo = null;
+        }
+        
         $paymentOption->setCallToActionText($actionText)
             ->setAction($this->context->link->getModuleLink('cardgate', 'validation', array(), true))
             ->setInputs( $this->paymentData() )
-            ->setAdditionalInformation($additionalInformation);
-            //->setLogo(Media::getMediaPath(_PS_MODULE_DIR_.$this->name.'/logo.gif'));
+            ->setAdditionalInformation($additionalInformation)
+            ->setLogo($logo);
 
         $payment_options = [
             $paymentOption
@@ -112,8 +124,6 @@ class CardgatePayment extends PaymentModule {
         }
     }
 
-    
-
     public function paymentData() {   
              $data =   [
                     'option' => [
@@ -125,6 +135,7 @@ class CardgatePayment extends PaymentModule {
         
         return $data;
     }
+    
      protected function generateForm()
     {
         $this->context->smarty->assign([

@@ -101,6 +101,7 @@ class Cardgate extends PaymentModule {
             $hashkey = ( string ) Tools::getValue('CARDGATE_HASH_KEY');
             $merchantid = ( string ) Tools::getValue('CARDGATE_MERCHANT_ID');
             $merchantapikey = ( string ) Tools::getValue('CARDGATE_MERCHANT_API_KEY') ;
+            $paymentdisplay = ( string ) Tools::getValue('CARDGATE_PAYMENT_DISPLAY') ;
             $my_module_field_names = $this->myModelFieldNames();
             foreach ( $my_module_field_names as $key => $my_module_field_name ) {
                 Configuration::updateValue($my_module_field_name,  ( string ) Tools::getValue( $my_module_field_name) );
@@ -112,6 +113,7 @@ class Cardgate extends PaymentModule {
             Configuration::updateValue('CARDGATE_HASH_KEY', $hashkey );
             Configuration::updateValue('CARDGATE_MERCHANT_ID', $merchantid );
             Configuration::updateValue('CARDGATE_MERCHANT_API_KEY', $merchantapikey );
+            Configuration::updateValue('CARDGATE_PAYMENT_DISPLAY', $paymentdisplay );
 
             $output .= $this->displayConfirmation( $this->l('Settings updated') );
         }
@@ -195,7 +197,20 @@ class Cardgate extends PaymentModule {
                     'name' => 'CARDGATE_MERCHANT_API_KEY',
                     'size' => 20,
                     'required' => true,
-                    'hint' => $this->l('The Merchant API Key, which you can obtaint from your Accountmanager.')
+                    'hint' => $this->l('The Merchant API Key, which you can obtain from your Accountmanager.')
+                ),
+                array(
+                    'type' => 'select',
+                    'label' => $this->l('Payment display'),
+                    'name' => 'CARDGATE_PAYMENT_DISPLAY',
+                    'required' => false,
+                    'default_value' => 'textonly',
+                    'options' => array(
+                        'query' => array( array('id' => 'textonly', 'name' => 'Text only'), array('id' => 'logoonly', 'name' => 'Logo Only'), array('id' => 'textandlogo', 'name' => 'Text and Logo') ),
+                        'id' => 'id',
+                        'name' => 'name'
+                    ),
+                    'hint' => $this->l('Choose which display will be used at the checkout')
                 ),
             ),
             'submit' => array(
@@ -239,6 +254,7 @@ class Cardgate extends PaymentModule {
             $hashkey = ( string ) Tools::getValue('CARDGATE_HASH_KEY');
             $merchantid = ( string ) Tools::getValue('CARDGATE_MERCHANT_ID');
             $merchantapikey = ( string ) TOOLS:: getValue('CARDGATE_MERCHANT_API_KEY');
+            $paymentdisplay = ( string ) TOOLS:: getValue('CARDGATE_PAYMENT_DISPLAY');
             
             foreach ( $my_module_field_names as $key => $my_module_field_name ) {
                 $extra_costs[$my_module_field_name] = ( string ) Tools::getValue( $my_module_field_name );
@@ -249,6 +265,7 @@ class Cardgate extends PaymentModule {
             $hashkey = Configuration::get('CARDGATE_HASH_KEY');
             $merchantid = Configuration::get('CARDGATE_MERCHANT_ID');
             $merchantapikey = Configuration::get('CARDGATE_MERCHANT_API_KEY');
+            $paymentdisplay = Configuration::get('CARDGATE_PAYMENT_DISPLAY');
             foreach ( $my_module_field_names as $key => $my_module_field_name ) {
                 $extra_costs[$my_module_field_name] = Configuration::get( $my_module_field_name );
             }
@@ -260,6 +277,7 @@ class Cardgate extends PaymentModule {
         $helper->fields_value['CARDGATE_HASH_KEY'] = $hashkey;
         $helper->fields_value['CARDGATE_MERCHANT_ID'] = $merchantid;
         $helper->fields_value['CARDGATE_MERCHANT_API_KEY'] = $merchantapikey;
+        $helper->fields_value['CARDGATE_PAYMENT_DISPLAY'] = $paymentdisplay;
 
         foreach ( $my_module_field_names as $key => $my_module_field_name ) {
             $helper->fields_value[$my_module_field_name] = $extra_costs[$my_module_field_name];
