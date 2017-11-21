@@ -15,8 +15,8 @@ class CardgatePayment extends PaymentModule {
     protected $_paymentHookTpl = '';
 
     public function install() {
-
-        if ( !parent::install() || !$this->registerHook('paymentOptions') || !$this->registerHook('paymentReturn') ) {
+    	
+    	if ( !parent::install() || !$this->registerHook('paymentOptions') || !$this->registerHook('paymentReturn') ) {
             return false;
         }
         return true;
@@ -64,6 +64,8 @@ class CardgatePayment extends PaymentModule {
         if ($extraCosts > 0 ){
             $oCurrency = new Currency( $params['cart']->id_currency );
             $costText .= ' + '.$oCurrency->sign.' '.number_format($extraCosts, 2);
+        } else {
+        	$costText = '';
         }
         
         if ($this->paymentcode == 'ideal'){
@@ -136,8 +138,7 @@ class CardgatePayment extends PaymentModule {
         return $data;
     }
     
-     protected function generateForm()
-    {
+     protected function generateForm() {
         $this->context->smarty->assign([
             'action' => $this->context->link->getModuleLink($this->name, 'validation', array(), true),
             'issuers' => $this->getBanks(),

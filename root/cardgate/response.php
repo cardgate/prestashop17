@@ -159,10 +159,11 @@ if ( $_mr->__isSafe() ) {
     $extraData = explode( '|', $_REQUEST['reference'] );
     $cartId = $extraData[1];
     $extraCosts = floatval($extraData[2]);
+    $total = round(round($_REQUEST['amount']/100,2)- $extraCosts,2);
 
     $cart = new Cart( $cartId );
 
-    $total = $cart->getOrderTotal( true, 3 );
+   // $total = $cart->getOrderTotal( true,Cart::BOTH);
     $sStatus = $_mr->getStatus();
 
     switch ( $sStatus ) {

@@ -14,7 +14,7 @@ class Cardgate extends PaymentModule {
         $this->paymentcode = 'cardgate';
         $this->paymentname = 'CardGate';
         $this->tab = 'payments_gateways';
-        $this->version = '1.7.0';
+        $this->version = '1.7.1';
         $this->author = 'CardGate';
         $this->bootstrap = true;
         $this->currencies = true;
@@ -28,6 +28,7 @@ class Cardgate extends PaymentModule {
         $this->displayName = $this->l('CardGate Bank common');
         $this->description = $this->l('CardGate Bank base module.');
         $this->confirmUninstall = $this->l('Are you sure you want to uninstall the CardGate module?');
+        Configuration::updateValue( 'CARDGATE_VERSION', $this->version );
     }
     
     public function install() {
@@ -40,8 +41,9 @@ class Cardgate extends PaymentModule {
     }
 
     public function createOrderState() {
-
+    	
         if ( !Configuration::get('CARDGATE_PENDING') ) {
+        	
             $order_state = new OrderState();
             $order_state->name = array();
 
@@ -64,14 +66,16 @@ class Cardgate extends PaymentModule {
             $order_state->send_email = true;
             $order_state->template = 'payment';
             $order_state->color = 'RoyalBlue';
-            $orderState->hidden = false;
-            $orderState->delivery = false;
-            $orderState->logable = false;
-            $orderState->invoice = false;
-            $orderState->paid = false;
+            
+            $order_state->hidden = false;
+            $order_state->delivery = false;
+            $order_state->logable = false;
+            
+            $order_state->invoice = false;
+            $order_state->paid = false;
             $order_state->unremovable = true;
 
-
+            
             if ( $order_state->add() ) {
                 $source = _PS_MODULE_DIR_ . 'cardgate/logo.gif';
                 $destination = dirname( __FILE__ ) . '/../../img/os/' . ( int ) $order_state->id . '.gif';
@@ -216,7 +220,8 @@ class Cardgate extends PaymentModule {
             'submit' => array(
                 'title' => $this->l('Save'),
                 'class' => 'btn btn-default pull-right'
-            )
+            )		
+        		
         );
 
         $fields_form[0]['form']['input'] = array_merge( $fields_form[0]['form']['input'], $extra_costs );
@@ -393,7 +398,7 @@ class Cardgate extends PaymentModule {
         $data['email'] = $customer->email;
         $data['phone_number'] = !empty( $address->phone_mobile ) ? $address->phone_mobile : $address->phone;
         $data['plugin_name'] = $this->name;
-        $data['plugin_version'] = $this->version;
+        $data['plugin_version'] = configuration::get('CARDGATE_VERSION');
         $data['shop_name'] = 'PrestaShop';
         $data['shop_version'] = $this->shop_version;
         $data['cartitems'] = $cartitems;

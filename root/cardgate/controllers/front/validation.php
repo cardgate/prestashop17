@@ -26,6 +26,7 @@ class CardgateValidationModuleFrontController extends ModuleFrontController
                 break;
             }
         }
+        
         if (!$authorized) {
             die($this->module->l('This payment method is not available.', 'validation'));
         }
@@ -35,7 +36,6 @@ class CardgateValidationModuleFrontController extends ModuleFrontController
         ]);
        
         try {
-
             $oCardGate = new cardgate\api\Client( ( int ) Configuration::get( 'CARDGATE_MERCHANT_ID' ), Configuration::get( 'CARDGATE_MERCHANT_API_KEY' ), (Configuration::get( 'CARDGATE_TEST_MODE' ) == 1 ? TRUE : FALSE ) );
             $oCardGate->setIp( $_SERVER['REMOTE_ADDR'] );
             $oCardGate->setLanguage( $this->context->language->iso_code);
@@ -52,8 +52,9 @@ class CardgateValidationModuleFrontController extends ModuleFrontController
             // Configure payment option.
             
             $oTransaction->setPaymentMethod( $oCardGate->methods()->get( $option ) );
-            if ( 'ideal' == $option ) {
-                $oTransaction->setIssuer( $_COOKIE['issuer'] );
+            
+            if ( 'ideal' == $option && !empty ($_COOKIE['issuer']) ) {
+            	$oTransaction->setIssuer( $_COOKIE['issuer'] );
             }
             
              // Configure customer.
