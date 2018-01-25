@@ -377,7 +377,7 @@ class Cardgate extends PaymentModule {
         $data = array();
         $data['option'] = $option;
         $data['language'] = $this->context->language->iso_code;
-        $data['return_url'] = Tools::getHttpHost( true, true ) . __PS_BASE_URI__ . 'index.php?controller=order-confirmation&id_cart=' . ( int ) $cart->id . '&key=' . $customer->secure_key;
+        $data['return_url'] = Tools::getHttpHost( true, true ) . __PS_BASE_URI__ . 'index.php?controller=order-confirmation&id_cart=' . ( int ) $cart->id . '&key=' . $customer->secure_key . '&id_module=' . $this->id;
         $data['return_url_failed'] = Tools::getHttpHost( true, true ) . __PS_BASE_URI__ . 'index.php?controller=order&step=3';
         $data['amount'] = $cg_total;
         $data['currency'] = $currency->iso_code;
