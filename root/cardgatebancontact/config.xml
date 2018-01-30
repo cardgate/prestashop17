@@ -2,7 +2,7 @@
 <module>
     <name>cardgatebancontact</name>
     <displayName><![CDATA[CardGateBancontact]]></displayName>
-    <version><![CDATA[1.6.11]]></version>
+    <version><![CDATA[1.7.0]]></version>
     <description><![CDATA[Accepts payments with CardGate Bancontact.]]></description>
     <author><![CDATA[Richard Schoots]]></author>
     <tab><![CDATA[payments_gateways]]></tab>

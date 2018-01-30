@@ -2,7 +2,7 @@
 <module>
     <name>cardgateprzelewy24</name>
     <displayName><![CDATA[CardGate Przelewy24]]></displayName>
-    <version><![CDATA[1.6.1]]></version>
+    <version><![CDATA[1.7.0]]></version>
     <description><![CDATA[Accepts payments with CardGate Przelewy24.]]></description>
     <author><![CDATA[Richard Schoots]]></author>
     <tab><![CDATA[payments_gateways]]></tab>

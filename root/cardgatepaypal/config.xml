@@ -2,7 +2,7 @@
 <module>
 	<name>cardgatepaypal</name>
 	<displayName><![CDATA[CardGate PayPal]]></displayName>
-	<version><![CDATA[1.6.2]]></version>
+	<version><![CDATA[1.7.0]]></version>
 	<description><![CDATA[Accepts payments with CardGate PayPal.]]></description>
 	<author><![CDATA[Richard Schoots]]></author>
 	<tab><![CDATA[payments_gateways]]></tab>

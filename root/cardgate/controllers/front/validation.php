@@ -58,20 +58,20 @@ class CardgateValidationModuleFrontController extends ModuleFrontController
             }
             
              // Configure customer.
-            $oCustomer = $oTransaction->getCustomer();
-            $oCustomer->setEmail( $data['email'] );
-            $oCustomer->address()->setFirstName( $data['first_name']  );
-            $oCustomer->address()->setLastName( $data['last_name'] );
-            $oCustomer->address()->setAddress( $data['address']);
-            $oCustomer->address()->setZipCode( $data['zip_code']  );
-            $oCustomer->address()->setCity( $data['city']  );
-            $oCustomer->address()->setCountry( $data['country']);
-            $oCustomer->shippingAddress()->setFirstName( $data['delivery_first_name']  );
-            $oCustomer->shippingAddress()->setLastName( $data['delivery_last_name'] );
-            $oCustomer->shippingAddress()->setAddress( $data['delivery_address']);
-            $oCustomer->shippingAddress()->setZipCode( $data['delivery_zip_code']  );
-            $oCustomer->shippingAddress()->setCity( $data['delivery_city']  );
-            $oCustomer->shippingAddress()->setCountry( $data['delivery_country']);
+            $oConsumer = $oTransaction->getConsumer();
+            $oConsumer->setEmail( $data['email'] );
+            $oConsumer->address()->setFirstName( $data['first_name']  );
+            $oConsumer->address()->setLastName( $data['last_name'] );
+            $oConsumer->address()->setAddress( $data['address']);
+            $oConsumer->address()->setZipCode( $data['zip_code']  );
+            $oConsumer->address()->setCity( $data['city']  );
+            $oConsumer->address()->setCountry( $data['country']);
+            $oConsumer->shippingAddress()->setFirstName( $data['delivery_first_name']  );
+            $oConsumer->shippingAddress()->setLastName( $data['delivery_last_name'] );
+            $oConsumer->shippingAddress()->setAddress( $data['delivery_address']);
+            $oConsumer->shippingAddress()->setZipCode( $data['delivery_zip_code']  );
+            $oConsumer->shippingAddress()->setCity( $data['delivery_city']  );
+            $oConsumer->shippingAddress()->setCountry( $data['delivery_country']);
             
             $oCart = $oTransaction->getCart();
             
@@ -92,15 +92,21 @@ class CardgateValidationModuleFrontController extends ModuleFrontController
                     case 5:
                         $oItem = $oCart->addItem( \cardgate\api\Item:: TYPE_HANDLING, $cartitem['sku'], $cartitem['name'], $cartitem['quantity'], $cartitem['price'] );
                         break;
+                    case 6:
+                    	$oItem = $oCart->addItem( \cardgate\api\Item:: TYPE_CORRECTION, $cartitem['sku'], $cartitem['name'], $cartitem['quantity'], $cartitem['price'] );
+                    	break;
+                    case 7:
+                    	$oItem = $oCart->addItem( \cardgate\api\Item:: TYPE_VAT_CORRECTION, $cartitem['sku'], $cartitem['name'], $cartitem['quantity'], $cartitem['price'] );
+                    	break;
                 }
                 $oItem->setVat( $cartitem['vat'] );
                 $oItem->setVatAmount( $cartitem['vat_amount'] );
                 $oItem->setVatIncluded( $cartitem['vat_inc'] );
             }
-              
-            $oTransaction->setCallbackUrl( Tools::getHttpHost( true, true ) . __PS_BASE_URI__ . 'modules/cardgate/response.php' );
-            $oTransaction->setSuccessUrl( Tools::getHttpHost( true, true ) . __PS_BASE_URI__ . 'index.php?controller=order-confirmation&id_cart=' . ( int ) $cart->id . '&key=' . $customer->secure_key );
-            $oTransaction->setFailureUrl( Tools::getHttpHost( true, true ) . __PS_BASE_URI__ . 'index.php?controller=order&step=3'  );
+          
+            $oTransaction->setCallbackUrl( $data['callback'] );
+            $oTransaction->setSuccessUrl( $data['return_url'] );
+            $oTransaction->setFailureUrl( $data['return_url_failed']  );
             $oTransaction->setReference( $data['ref'] );
             $oTransaction->setDescription( $data['description'] );
             

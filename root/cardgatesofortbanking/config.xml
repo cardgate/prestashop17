@@ -2,7 +2,7 @@
 <module>
     <name>cardgatedirectebanking</name>
     <displayName><![CDATA[CardGate SofortBanking]]></displayName>
-    <version><![CDATA[1.6.1]]></version>
+    <version><![CDATA[1.7.0]]></version>
     <description><![CDATA[Accepts payments with CardGate SofortBanking.]]></description>
     <author><![CDATA[]]></author>
     <tab><![CDATA[payments_gateways]]></tab>

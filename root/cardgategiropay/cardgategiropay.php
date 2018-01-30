@@ -47,6 +47,7 @@ class Cardgategiropay extends PaymentModule {
         $this->ps_versions_compliancy = array('min' => '1.7.1.0', 'max' => _PS_VERSION_ );
         $this->paymentname = 'Giropay';
         $this->logoname = 'giropay';
+        $this->version = Configuration::get('CARDGATE_MODULE_VERSION');
         $this->imageurl = 'https://gateway.cardgateplus.com/images/logo' . $this->paymentcode . '.gif';
         $this->extra_cost = Configuration::get('CARDGATE_' . strtoupper( $this->paymentcode ) . '_EXTRACOST');
         $this->controllers = array('validation');

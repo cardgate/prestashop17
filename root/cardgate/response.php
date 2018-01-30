@@ -1,5 +1,4 @@
 <?php
-
 /**
  * CardGate - Prestashop
  *
@@ -23,7 +22,6 @@ switch ( $option ) {
         $option = 'ideal';
         break;
 }
-
 
 require(dirname( __FILE__ ) . '/../../config/config.inc.php');
 require(dirname( __FILE__ ) . $option . '/cardgate' . $option . '.php');
@@ -158,7 +156,7 @@ if ( $_mr->__isSafe() ) {
     $_cardgate = new $payment();
     $extraData = explode( '|', $_REQUEST['reference'] );
     $cartId = $extraData[1];
-    $extraCosts = floatval($extraData[2]);
+    $extraCosts = floatval($extraData[2])/100;
     $total = round(round($_REQUEST['amount']/100,2)- $extraCosts,2);
 
     $cart = new Cart( $cartId );
@@ -180,16 +178,17 @@ if ( $_mr->__isSafe() ) {
             $newStatus = _PS_OS_PAYMENT_;
             break;
     }
-
-
+    
     if ( $cart->OrderExists() ) {
-        $id_order = Order::getOrderByCartId( $cart->id );
+    	
+        $id_order = Order::getOrderByCartId( $cartId );
         $oOrder = new Order( $id_order );
         if ( $oOrder->current_state != _PS_OS_PAYMENT_ && $oOrder->current_state != _PS_OS_ERROR_ ) {
             $oOrder->setCurrentState( $newStatus );
             $oOrder->save();
         }
     } else {
+  
         // update payment total with extra fee before making the order
         switch ( $sStatus ) {
             case 'failed':
@@ -205,7 +204,7 @@ if ( $_mr->__isSafe() ) {
                 }
                 break;
             case 'pending':
-                $_cardgate->validateOrder( $cartId, $newStatus, $total, $_cardgate->paymentname . ' Payment', NULL, NULL, NULL, false, $cart->secure_key );
+            	$_cardgate->validateOrder( $cartId, $newStatus, $total, $_cardgate->paymentname . ' Payment', NULL, NULL, ( int ) $cart->id_currency, false, $cart->secure_key );
                 break;
             case 'succes':
                     $st = Configuration::get( 'CARDGATE_PENDING' );
