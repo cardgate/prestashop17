@@ -49,6 +49,3 @@ Please visit [My Cardgate](https://my.cardgate.com/) and retrieve your RESTful A
 ## Requirements
 
 No further requirements.
-=======
-# prestashop17
-CardGate module for PrestaShop 1.7
