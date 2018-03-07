@@ -1,4 +1,6 @@
 <?php
+use Symfony\Component\Validator\Constraints\IsNull;
+
 if (! defined ( '_PS_VERSION_' ))
 	exit ();
 	
@@ -8,7 +10,7 @@ if (! defined ( '_PS_VERSION_' ))
 		var $shop_version = _PS_VERSION_;
 		
 		public function __construct() {
-			Configuration::updateValue ( 'CARDGATE_MODULE_VERSION', '1.7.2' );
+			Configuration::updateValue ( 'CARDGATE_MODULE_VERSION', '1.7.3' );
 			$this->name = 'cardgate';
 			$this->paymentcode = 'cardgate';
 			$this->paymentname = 'CardGate';
@@ -459,6 +461,13 @@ if (! defined ( '_PS_VERSION_' ))
 				$item ['type'] = 7;
 				$cartitems [] = $item;
 			}
+			if ($address->phone_mobile!='') {
+				$phone = $address->phone;
+			} elseif ($address->phone !='') {
+				$phone = $address->phone;
+			}else {
+				$phone = '';
+			}
 			
 			$data = array ();
 			$data ['option'] = $option;
@@ -483,7 +492,7 @@ if (! defined ( '_PS_VERSION_' ))
 			$data ['delivery_city'] = $delivery_address->city;
 			$data ['delivery_country'] = $deliveryCountryObj->iso_code;
 			$data ['email'] = $customer->email;
-			$data ['phone_number'] = ! empty ( $address->phone_mobile ) ? $address->phone_mobile : $address->phone;
+			$data ['phone'] = $phone;
 			$data ['plugin_name'] = $this->name;
 			$data ['plugin_version'] = configuration::get ( 'CARDGATE_VERSION' );
 			$data ['shop_name'] = 'PrestaShop';
