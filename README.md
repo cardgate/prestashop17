@@ -19,7 +19,7 @@ Please visit [My Cardgate](https://my.cardgate.com/) and retrieve your RESTful A
 
 1. Download the cardgate.zip file to your desktop.
 
-2. Unzip the file, and upload the contents of the **cardgate** folder to the **modules** folder of your website.
+2. Unzip the file, and upload the contents of the **root** folder to the **modules** folder of your website.
 
 3. In your PrestaShop **admin**, go to the **Modules** tab and select **Installed Modules**.
 
@@ -49,6 +49,3 @@ Please visit [My Cardgate](https://my.cardgate.com/) and retrieve your RESTful A
 ## Requirements
 
 No further requirements.
-=======
-# prestashop17
-CardGate module for PrestaShop 1.7

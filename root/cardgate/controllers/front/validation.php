@@ -72,6 +72,10 @@ class CardgateValidationModuleFrontController extends ModuleFrontController
             $oConsumer->shippingAddress()->setZipCode( $data['delivery_zip_code']  );
             $oConsumer->shippingAddress()->setCity( $data['delivery_city']  );
             $oConsumer->shippingAddress()->setCountry( $data['delivery_country']);
+          
+            if ($data['phone'] !=''){
+            	$oConsumer->setPhone($data['phone']);
+            }
             
             $oCart = $oTransaction->getCart();
             
