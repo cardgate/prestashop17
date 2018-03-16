@@ -32,7 +32,7 @@ RESTful API gebruikersnaam en wachtwoord op, of neem contact op met je accountma
 
 2. In het linkermenu, bij **Modules**, kies **Modules & Services**, en in het zoekvenster, zoek op CardGate.
 
-3. Installeer de **CardGate Bank algemeen** module en de **CardGate betaalmodules** die u wilt gaan gebruiken.
+3. Installeer de **CardGate Bank algemeen** module en de **CardGate betaalmodules** die je wilt gaan gebruiken.
 
 4. Klik op geinstalleerde modules, en klik op de **Configure** knop van de **CardGate Bank Algemeen** module.
 
