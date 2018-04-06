@@ -2,10 +2,6 @@
 
 # CardGate module for PrestaShop 1.7+
 
-[![Total Downloads](https://img.shields.io/packagist/dt/cardgate/prestashop17.svg)](https://packagist.org/packages/cardgate/prestashop17)
-[![Latest Version](https://img.shields.io/packagist/v/cardgate/prestashop17.svg)](https://github.com/cardgate/prestashop17/releases)
-[![Build Status](https://travis-ci.org/cardgate/prestashop17.svg?branch=master)](https://travis-ci.org/cardgate/prestashop17)
-
 ## Support
 
 This plugin supports PrestaShop version **1.7.x**.

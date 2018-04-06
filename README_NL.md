@@ -2,10 +2,6 @@
 
 # CardGate module voor PrestaShop 1.7+
 
-[![Total Downloads](https://img.shields.io/packagist/dt/cardgate/prestashop17.svg)](https://packagist.org/packages/cardgate/prestashop17)
-[![Latest Version](https://img.shields.io/packagist/v/cardgate/prestashop17.svg)](https://github.com/cardgate/prestashop17/releases)
-[![Build Status](https://travis-ci.org/cardgate/prestashop17.svg?branch=master)](https://travis-ci.org/cardgate/prestashop17)
-
 ## Support
 
 Deze plug-in is geschikt voor PrestaShop versie **1.7.x**.
@@ -40,11 +36,11 @@ RESTful API gebruikersnaam en wachtwoord op, of neem contact op met je accountma
 
 6. Vul de **Merchant ID** en **Merchant API Key** in zoals je die gekregen hebt van je CardGate Account manager.
 
-5. Vul eventueel extra betaalkosten in voor specifieke betaalmethodes.
+7. Vul eventueel extra betaalkosten in voor specifieke betaalmethodes.
 
-6. Klik nu op **Opslaan**.
+8. Klik nu op **Opslaan**.
 
-7. Zorg ervoor dat je na het testen bij de **CardGate Bank algemeen** module de **Configuratie** omschakelt van  
+9. Zorg ervoor dat je na het testen bij de **CardGate Bank algemeen** module de **Configuratie** omschakelt van  
    **Test Mode** naar **Live mode** en sla het op (**Save**).
 
 ## Vereisten
