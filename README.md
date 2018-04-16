@@ -2,10 +2,6 @@
 
 # CardGate module for PrestaShop 1.7+
 
-[![Total Downloads](https://img.shields.io/packagist/dt/cardgate/prestashop17.svg)](https://packagist.org/packages/cardgate/prestashop17)
-[![Latest Version](https://img.shields.io/packagist/v/cardgate/prestashop17.svg)](https://github.com/cardgate/prestashop17/releases)
-[![Build Status](https://travis-ci.org/cardgate/prestashop17.svg?branch=master)](https://travis-ci.org/cardgate/prestashop17)
-
 ## Support
 
 This plugin supports PrestaShop version **1.7.x**.
@@ -19,7 +15,7 @@ Please visit [My Cardgate](https://my.cardgate.com/) and retrieve your RESTful A
 
 1. Download the cardgate.zip file to your desktop.
 
-2. Unzip the file, and upload the contents of the **root** folder to the **modules** folder of your website.
+2. Unzip the file, and, using FTP, upload the **contents** of the **root** folder to the **modules** folder of your website.
 
 3. In your PrestaShop **admin**, go to the **Modules** tab and select **Installed Modules**.
 
