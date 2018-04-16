@@ -16,7 +16,7 @@ RESTful API gebruikersnaam en wachtwoord op, of neem contact op met je accountma
 
 1. Download en unzip het **cardgate.zip** bestand op je bureaublad.
 
-2. Plaats de inhoud van de **cardgate** map via FTP in de **modules** map van je website.
+2. Plaats de inhoud van de **root** map via FTP in de **modules** map van je website.
 
 3. In je PrestaShop **admin**, ga naar de **Modules** tab en selecteer **Geinstalleerde Modules**.
 
