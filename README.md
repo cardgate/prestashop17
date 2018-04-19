@@ -8,7 +8,7 @@ This module supports PrestaShop version **1.7.x** .
 
 ## Preparation
 
-The usage of this module requires that you have obtained CardGate RESTful API credentials.
+The usage of this module requires that you have obtained CardGate RESTful API credentials.  
 Please visit [My CardGate](https://my.cardgate.com/) and retrieve your credentials, or contact your accountmanager.
 
 ## Installation
