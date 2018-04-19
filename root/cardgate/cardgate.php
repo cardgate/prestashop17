@@ -26,9 +26,9 @@ if (! defined ( '_PS_VERSION_' ))
 			parent::__construct ();
 			
 			$this->page = basename ( __FILE__, '.php' );
-			$this->displayName = $this->l ( 'CardGate Bank common' );
-			$this->description = $this->l ( 'CardGate Bank base module.' );
-			$this->confirmUninstall = $this->l ( 'Are you sure you want to uninstall the CardGate module?' );
+			$this->displayName = $this->l('CardGate Bank common' );
+			$this->description = $this->l('CardGate Bank base module.' );
+			$this->confirmUninstall = $this->l('Are you sure you want to uninstall the CardGate module?' );
 			Configuration::updateValue ( 'CARDGATE_VERSION', $this->version );
 		}
 		
@@ -85,7 +85,7 @@ if (! defined ( '_PS_VERSION_' ))
 		}
 		
 		public function displayConf() {
-			$this->_html = $this->displayConfirmation ( $this->l ( 'Settings updated' ) );
+			$this->_html = $this->displayConfirmation ( $this->l('Settings updated' ) );
 		}
 		
 		public function alterName($name) {
@@ -117,7 +117,7 @@ if (! defined ( '_PS_VERSION_' ))
 				Configuration::updateValue ( 'CARDGATE_MERCHANT_API_KEY', $merchantapikey );
 				Configuration::updateValue ( 'CARDGATE_PAYMENT_DISPLAY', $paymentdisplay );
 				
-				$output .= $this->displayConfirmation ( $this->l ( 'Settings updated' ) );
+				$output .= $this->displayConfirmation ( $this->l('Settings updated' ) );
 			}
 			
 			return $output . $this->displayForm ();
@@ -143,23 +143,23 @@ if (! defined ( '_PS_VERSION_' ))
 				
 				$extra_costs [] = array (
 						'type' => 'text',
-						'label' => $this->l ( 'Extra cost' ) . ' ' . $module,
+						'label' => $this->l('Extra cost' ) . ' ' . $module,
 						'name' => $my_module_field_names [$key],
 						'size' => '1',
 						'required' => false,
-						'hint' => $this->l ( 'Add an extra charge for your payment method, for example, 1.95 or 5%' )
+						'hint' => $this->l('Add an extra charge for your payment method, for example, 1.95 or 5%' )
 				);
 			}
 			
 			$fields_form [0] ['form'] = array (
 					'legend' => array (
-							'title' => $this->l ( 'General Settings' ),
+							'title' => $this->l('General Settings' ),
 							'image' => '../img/admin/edit.gif'
 					),
 					'input' => array (
 							array (
 									'type' => 'select',
-									'label' => $this->l ( 'Mode' ),
+									'label' => $this->l('Mode' ),
 									'name' => 'CARDGATE_TEST_MODE',
 									'required' => false,
 									'default_value' => 1,
@@ -180,39 +180,39 @@ if (! defined ( '_PS_VERSION_' ))
 							),
 							array (
 									'type' => 'text',
-									'label' => $this->l ( 'Site Id' ),
+									'label' => $this->l('Site ID' ),
 									'name' => 'CARDGATE_SITE_ID',
 									'size' => 64,
 									'required' => true,
-									'hint' => $this->l ( 'The CardGate Site Id, which you can find in your CardGate back-office' )
+									'hint' => $this->l('The CardGate Site ID, which you can find in your CardGate back-office' )
 							),
 							array (
 									'type' => 'text',
-									'label' => $this->l ( 'Hash Key' ),
+									'label' => $this->l('Hash key' ),
 									'name' => 'CARDGATE_HASH_KEY',
 									'size' => 20,
 									'required' => true,
-									'hint' => $this->l ( 'The CardGate Hash Key, which you can find in your CardGate back-office' )
+									'hint' => $this->l('The CardGate hash key, which you can find in your CardGate back-office' )
 							),
 							array (
 									'type' => 'text',
-									'label' => $this->l ( 'Merchant ID' ),
+									'label' => $this->l('Merchant ID' ),
 									'name' => 'CARDGATE_MERCHANT_ID',
 									'size' => 20,
 									'required' => true,
-									'hint' => $this->l ( 'The Merchant ID, which you can find in your CardGate back-office' )
+									'hint' => $this->l('The Merchant ID, which you can find in your CardGate back-office' )
 							),
 							array (
 									'type' => 'text',
-									'label' => $this->l ( 'Merchant API key' ),
+									'label' => $this->l('API key' ),
 									'name' => 'CARDGATE_MERCHANT_API_KEY',
 									'size' => 20,
 									'required' => true,
-									'hint' => $this->l ( 'The Merchant API Key, which you can obtain from your Accountmanager.' )
+									'hint' => $this->l('The API Key, which you can obtain from your Accountmanager.' )
 							),
 							array (
 									'type' => 'select',
-									'label' => $this->l ( 'Payment display' ),
+									'label' => $this->l('Payment display' ),
 									'name' => 'CARDGATE_PAYMENT_DISPLAY',
 									'required' => false,
 									'default_value' => 'textonly',
@@ -234,11 +234,11 @@ if (! defined ( '_PS_VERSION_' ))
 											'id' => 'id',
 											'name' => 'name'
 									),
-									'hint' => $this->l ( 'Choose which display will be used at the checkout' )
+									'hint' => $this->l('Choose which display will be used at the checkout' )
 							)
 					),
 					'submit' => array (
-							'title' => $this->l ( 'Save' ),
+							'title' => $this->l('Save' ),
 							'class' => 'btn btn-default pull-right'
 					)
 					
@@ -261,12 +261,12 @@ if (! defined ( '_PS_VERSION_' ))
 			$helper->submit_action = 'submit' . $this->name;
 			$helper->toolbar_btn = array (
 					'save' => array (
-							'desc' => $this->l ( 'Save' ),
+							'desc' => $this->l('Save' ),
 							'href' => AdminController::$currentIndex . '&configure=' . $this->name . '&save' . $this->name . '&token=' . Tools::getAdminTokenLite ( 'AdminModules' )
 					),
 					'back' => array (
 							'href' => AdminController::$currentIndex . '&token=' . Tools::getAdminTokenLite ( 'AdminModules' ),
-							'desc' => $this->l ( 'Back to list' )
+							'desc' => $this->l('Back to list' )
 					)
 			);
 			
