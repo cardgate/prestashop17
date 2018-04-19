@@ -26,7 +26,7 @@ of neem contact op met je accountmanager.
 
 1. Log in op het <b>admin</b> gedeelte van je PrestaShop.  
 
-2. In het linkermenu, bij **Modules**, kies **Modules & Services**, en in het zoekvenster, zoek op CardGate.
+2. In het linkermenu, bij **Modules**, kies **Modules & Services**, en in het zoekvenster, zoek op **CardGate**.
 
 3. Installeer de **CardGate Bank algemeen** module en de **CardGate betaalmodules** die je wilt gaan gebruiken.
 

@@ -31,7 +31,7 @@ Please visit [My CardGate](https://my.cardgate.com/) and retrieve your credentia
 
 4. Click on the installed Modules, and click on the **Configure** button of the **CardGate Bank Common** module.
 
-5. Enter the **site ID**, and the **hash key** which you can find at **Sites** on My CardGate.
+5. Enter the **site ID**, and the **hash key** which you can find at **Sites** on [My CardGate](https://my.cardgate.com/).
 
 6. Enter the **merchant ID** and **API Key**, which has been given to you by your CardGate account manager.
 
@@ -40,7 +40,7 @@ Please visit [My CardGate](https://my.cardgate.com/) and retrieve your credentia
 6. Now click on **Save**.
 
 7. When you are **finished testing** the **CardGate Bank Common** module and make sure that you switch  
-   the **configuration** from **Test Mode** to **Live Mode** and save it (**Save**)
+   the **configuration** from **Test Mode** to **Live Mode** and save it (**Save**).
 
 ## Requirements
 
