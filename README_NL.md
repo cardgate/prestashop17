@@ -4,7 +4,7 @@
 
 ## Support
 
-Deze module is geschikt voor PrestaShop versie **1.7.x**.
+Deze module is geschikt voor PrestaShop versie **1.7.x** .
 
 ## Voorbereiding
 
@@ -32,9 +32,9 @@ of neem contact op met je accountmanager.
 
 4. Klik op geïnstalleerde modules, en klik op de **Configure** knop van de **CardGate Bank Algemeen** module.
 
-5. Vul de **Site ID** en de **hash key** in, deze kun je vinden bij **Sites** op [Mijn CardGate](https://my.cardgate.com/).
+5. Vul de **site ID** en de **hash key** in, deze kun je vinden bij **Sites** op [Mijn CardGate](https://my.cardgate.com/).
 
-6. Vul de **Merchant ID** en **API key** in zoals je die gekregen hebt van je CardGate Account manager.
+6. Vul de **merchant ID** en **API key** in zoals je die gekregen hebt van je CardGate Account manager.
 
 7. Vul eventueel extra betaalkosten in voor specifieke betaalmethodes.
 
