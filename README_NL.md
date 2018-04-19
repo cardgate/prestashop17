@@ -32,7 +32,7 @@ of neem contact op met je accountmanager.
 
 4. Klik op geïnstalleerde modules, en klik op de **Configure** knop van de **CardGate Bank Algemeen** module.
 
-5. Vul de **Site ID** en de **Hash key** in, deze kun je vinden bij **Sites** op [Mijn CardGate](https://my.cardgate.com/).
+5. Vul de **Site ID** en de **hash key** in, deze kun je vinden bij **Sites** op [Mijn CardGate](https://my.cardgate.com/).
 
 6. Vul de **Merchant ID** en **API key** in zoals je die gekregen hebt van je CardGate Account manager.
 

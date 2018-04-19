@@ -39,7 +39,7 @@ Please visit [My CardGate](https://my.cardgate.com/) and retrieve your credentia
 
 6. Now click on **Save**.
 
-7. When you are **finished testing** to to the **CardGate Bank Common** module and make 
+7. When you are **finished testing** the **CardGate Bank Common** module and make 
    sure that you switch the **configuration** from **Test Mode** to **Live Mode** and save it (**Save**)
 
 ## Requirements
