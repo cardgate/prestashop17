@@ -122,7 +122,7 @@ class CardgateValidationModuleFrontController extends ModuleFrontController
                 Tools::redirect($sActionUrl);                
             }
         } catch ( cardgate\api\Exception $oException_ ) {
-           // echo htmlspecialchars( $oException_->getMessage() );
+            // htmlspecialchars( $oException_->getMessage() );
             Tools::redirect('index.php?controller=order&step=1');
         }
         Tools::redirect('index.php?controller=order&step=1');
