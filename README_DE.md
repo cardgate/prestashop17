@@ -8,7 +8,7 @@ Dieses Modul is geeignet für PrestaShop version **1.7.x** .
 
 ## Vorbereitung
 
-Um dieses Modul zu verwenden sind Zugangsdate zur CardGate RESTful API notwendig.
+Um dieses Modul zu verwenden sind Zugangsdate zur CardGate RESTful API notwendig.  
 Gehen zu [**Mein CardGate**](https://my.cardgate.com/) und fragen Sie Ihre Zugangsdaten an, oder kontaktieren Sie Ihren Accountmanager.
 
 ## Installation
