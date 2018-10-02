@@ -328,6 +328,7 @@ if (! defined ( '_PS_VERSION_' ))
 		}
 		
 		public function _paymentData($option) {
+		   
 			$moduleName = 'cardgate' . $option;
 			$language = new Language ( $this->context->cart->id_lang );
 			
