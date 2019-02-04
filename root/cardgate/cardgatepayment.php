@@ -43,7 +43,7 @@ class CardgatePayment extends PaymentModule {
     }
 
     public function hookPaymentOptions( $params ) {
-        
+   
         if ( !$this->active ) {
             return;
         }
@@ -76,6 +76,7 @@ class CardgatePayment extends PaymentModule {
         }
         
         $display = Configuration::get('CARDGATE_PAYMENT_DISPLAY');
+    
         if ($display == 'textandlogo' || $display == 'textonly'){
             $actionText = $this->l('Pay with').' '.$this->paymentname . $costText;
         } else {

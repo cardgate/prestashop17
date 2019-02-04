@@ -22,7 +22,7 @@ if ( file_exists( dirname( __FILE__ ) . '/../cardgate/cardgate.php') ) {
  * 
  *   $this->l('Pay with')
  */
-class Cardgategiropay extends PaymentModule {
+class Cardgatepaysafecash extends PaymentModule {
 	
 	var $tab = 'payments_gateways';
 	var $author = 'CardGate';
@@ -42,11 +42,11 @@ class Cardgategiropay extends PaymentModule {
     public function __construct() {
         global $cookie, $order;
 
-        $this->name = 'cardgategiropay';
-        $this->paymentcode = 'giropay';
+        $this->name = 'cardgatepaysafecash';
+        $this->paymentcode = 'paysafecash';
         $this->ps_versions_compliancy = array('min' => '1.7.1.0', 'max' => _PS_VERSION_ );
-        $this->paymentname = 'Giropay';
-        $this->logoname = 'giropay';
+        $this->paymentname = 'Paysafecash';
+        $this->logoname = 'paysafecash';
         $this->version = Configuration::get('CARDGATE_MODULE_VERSION');
         $this->imageurl = 'https://gateway.cardgateplus.com/images/logo' . $this->paymentcode . '.gif';
         $this->extra_cost = Configuration::get('CARDGATE_' . strtoupper( $this->paymentcode ) . '_EXTRACOST');
@@ -58,8 +58,8 @@ class Cardgategiropay extends PaymentModule {
 
         parent::__construct();
         $this->page = basename( __FILE__, '.php');
-        $this->displayName = $this->l('CardGate Giropay');
-        $this->description = $this->l('Accepts payments with CardGate Giropay.');
+        $this->displayName = $this->l('CardGate Paysafecash');
+        $this->description = $this->l('Accepts payments with CardGate Paysafecash.');
         $this->confirmUninstall = $this->l('Are you sure you want to delete your details?');
 
         if ( !count( Currency::checkPaymentCurrencies( $this->id ) ) ) {
