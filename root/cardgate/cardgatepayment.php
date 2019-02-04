@@ -4,7 +4,7 @@ use PrestaShop\PrestaShop\Core\Payment\PaymentOption;
 
 class CardgatePayment extends PaymentModule {
 
-    var $version = '1.7.4';
+    var $version = '1.7.5';
     var $tab = 'payments_gateways';
     var $author = 'CardGate';
     var $shop_version = _PS_VERSION_;
@@ -43,7 +43,7 @@ class CardgatePayment extends PaymentModule {
     }
 
     public function hookPaymentOptions( $params ) {
-        
+   
         if ( !$this->active ) {
             return;
         }
@@ -76,6 +76,7 @@ class CardgatePayment extends PaymentModule {
         }
         
         $display = Configuration::get('CARDGATE_PAYMENT_DISPLAY');
+    
         if ($display == 'textandlogo' || $display == 'textonly'){
             $actionText = $this->l('Pay with').' '.$this->paymentname . $costText;
         } else {

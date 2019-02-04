@@ -34,7 +34,7 @@ class CardgateValidationModuleFrontController extends ModuleFrontController
         $this->context->smarty->assign([
             'params' => $_REQUEST,
         ]);
-       
+     
         try {
             $oCardGate = new cardgate\api\Client( ( int ) Configuration::get( 'CARDGATE_MERCHANT_ID' ), Configuration::get( 'CARDGATE_MERCHANT_API_KEY' ), (Configuration::get( 'CARDGATE_TEST_MODE' ) == 1 ? TRUE : FALSE ) );
             $oCardGate->setIp( $_SERVER['REMOTE_ADDR'] );
@@ -56,7 +56,7 @@ class CardgateValidationModuleFrontController extends ModuleFrontController
             if ( 'ideal' == $option && !empty ($_COOKIE['issuer']) ) {
             	$oTransaction->setIssuer( $_COOKIE['issuer'] );
             }
-            
+             
              // Configure customer.
             $oConsumer = $oTransaction->getConsumer();
             $oConsumer->setEmail( $data['email'] );

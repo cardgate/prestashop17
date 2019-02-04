@@ -22,7 +22,7 @@ if ( file_exists( dirname( __FILE__ ) . '/../cardgate/cardgate.php') ) {
  * 
  *   $this->l('Pay with')
  */
-class Cardgategiropay extends PaymentModule {
+class Cardgatebillink extends PaymentModule {
 	
 	var $tab = 'payments_gateways';
 	var $author = 'CardGate';
@@ -42,11 +42,11 @@ class Cardgategiropay extends PaymentModule {
     public function __construct() {
         global $cookie, $order;
 
-        $this->name = 'cardgategiropay';
-        $this->paymentcode = 'giropay';
-        $this->ps_versions_compliancy = array('min' => '1.7.1.0', 'max' => _PS_VERSION_ );
-        $this->paymentname = 'Giropay';
-        $this->logoname = 'giropay';
+        $this->name = 'cardgatebillink';
+        $this->paymentcode = 'billink';
+        $this->ps_versions_compliancy = array('min' => '1.7', 'max' => _PS_VERSION_ );
+        $this->paymentname = 'Billink';
+        $this->logoname = 'billink';
         $this->version = Configuration::get('CARDGATE_MODULE_VERSION');
         $this->imageurl = 'https://gateway.cardgateplus.com/images/logo' . $this->paymentcode . '.gif';
         $this->extra_cost = Configuration::get('CARDGATE_' . strtoupper( $this->paymentcode ) . '_EXTRACOST');
@@ -58,8 +58,8 @@ class Cardgategiropay extends PaymentModule {
 
         parent::__construct();
         $this->page = basename( __FILE__, '.php');
-        $this->displayName = $this->l('CardGate Giropay');
-        $this->description = $this->l('Accepts payments with CardGate Giropay.');
+        $this->displayName = $this->l('CardGate Billink');
+        $this->description = $this->l('Accepts payments with CardGate Billink.');
         $this->confirmUninstall = $this->l('Are you sure you want to delete your details?');
 
         if ( !count( Currency::checkPaymentCurrencies( $this->id ) ) ) {
@@ -75,6 +75,7 @@ class Cardgategiropay extends PaymentModule {
             $rate = $currency->iso_code;
         }
         $id_lang = (!isset( $cookie ) OR ! is_object( $cookie )) ? intval( Configuration::get('PS_LANG_DEFAULT') ) : intval( $cookie->id_lang );
+
 
         if ( isset( $GLOBALS['CARDGATENOTFOUND'] ) )
             $this->warning = $this->l('The CardGate module is not found.');
@@ -141,7 +142,6 @@ class Cardgategiropay extends PaymentModule {
     	}
     	
     	$display = Configuration::get('CARDGATE_PAYMENT_DISPLAY');
-    
     	if ($display == 'textandlogo' || $display == 'textonly'){
     		$actionText = $this->l('Pay with').' '.$this->paymentname . $costText;
     	} else {
@@ -153,7 +153,8 @@ class Cardgategiropay extends PaymentModule {
     	} else {
     		$logo = null;
     	}
-    	$paymentOption->setCallToActionText($actionText )
+    	
+    	$paymentOption->setCallToActionText($actionText)
     	->setAction($this->context->link->getModuleLink('cardgate', 'validation', array(), true))
     	->setInputs( $this->paymentData() )
     	->setAdditionalInformation($additionalInformation)
@@ -209,6 +210,7 @@ class Cardgategiropay extends PaymentModule {
     		return round( $extra_cost, 2 );
     	}
     }
+
 }
 
 ?>

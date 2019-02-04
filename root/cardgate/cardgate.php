@@ -10,7 +10,7 @@ if (! defined ( '_PS_VERSION_' ))
 		var $shop_version = _PS_VERSION_;
 		
 		public function __construct() {
-			Configuration::updateValue ( 'CARDGATE_MODULE_VERSION', '1.7.4' );
+			Configuration::updateValue ( 'CARDGATE_MODULE_VERSION', '1.7.5' );
 			$this->name = 'cardgate';
 			$this->paymentcode = 'cardgate';
 			$this->paymentname = 'CardGate';
@@ -328,6 +328,7 @@ if (! defined ( '_PS_VERSION_' ))
 		}
 		
 		public function _paymentData($option) {
+		   
 			$moduleName = 'cardgate' . $option;
 			$language = new Language ( $this->context->cart->id_lang );
 			
