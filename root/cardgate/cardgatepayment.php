@@ -4,7 +4,7 @@ use PrestaShop\PrestaShop\Core\Payment\PaymentOption;
 
 class CardgatePayment extends PaymentModule {
 
-    var $version = '1.7.5';
+    var $version = '1.7.6';
     var $tab = 'payments_gateways';
     var $author = 'CardGate';
     var $shop_version = _PS_VERSION_;
