@@ -225,7 +225,7 @@ if ( $_mr->__isSafe() ) {
 
             $shippingCost = $oOrder->total_shipping;
             $newShippingCosts = $shippingCost + $extraCosts;
-            $extraCostsExcl = round( $extraCosts / (1 + (21 / 100)), 2 );
+            $extraCostsExcl = round( $extraCosts / (1 + ($oOrder->carrier_tax_rate  / 100)), 2 );
 
             // add the extra costs to the totals 
             $oOrder->total_shipping = $newShippingCosts;
@@ -239,18 +239,18 @@ if ( $_mr->__isSafe() ) {
         }
         
         if ( ($sStatus == 'succes') ) {
-            $result = $oOrder->addOrderPayment( $oOrder->total_paid_tax_incl, 'Unknown', $_REQUEST['transaction_id'] );
-            $orderPayment = OrderPayment::getByOrderId( $oOrder->id );
+            $result = $oOrder->addOrderPayment( $oOrder->total_paid_tax_incl, $_cardgate->paymentname, $_REQUEST['transaction_id'] );
+	        $orderPayment = OrderPayment::getByOrderId( $oOrder->id );
 
-            $history = new OrderHistory();
-            $history->id_order = ( int ) $oOrder->id;
-            $id_order_state = $newStatus;
-            $history->changeIdOrderState( ( int ) $id_order_state, $oOrder, $orderPayment );
-            $res = Db::getInstance()->getRow( '
+	        $history = new OrderHistory();
+	        $history->id_order = ( int ) $oOrder->id;
+	        $id_order_state = $newStatus;
+	        $history->changeIdOrderState( ( int ) $id_order_state, $oOrder, $orderPayment );
+	        $res = Db::getInstance()->getRow( '
 			SELECT `invoice_number`, `invoice_date`, `delivery_number`, `delivery_date`
 			FROM `' . _DB_PREFIX_ . 'orders`
 			WHERE `id_order` = ' . ( int ) $oOrder->id );
-            $history->addWithemail();
+	        $history->addWithemail();
         }
     }
     echo $_REQUEST['transaction'] . "." . $_REQUEST['code'];
