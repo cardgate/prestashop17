@@ -16,7 +16,7 @@ of neem contact op met je accountmanager.
 
 1. Download en unzip de meest recente [source code](https://github.com/cardgate/prestashop17/releases/) op je bureaublad.
 
-2. Plaats de inhoud van de **root** map via FTP in de **modules** map van je website.
+2. Plaats de inhoud van het **zip bestand** via FTP in de **root** map van je website.
 
 3. In je PrestaShop **admin**, ga naar de **Modules** tab en selecteer **Geïnstalleerde Modules**.
 
