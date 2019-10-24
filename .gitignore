@@ -16,6 +16,7 @@ modules/*
 !modules/cardgateidealqr/
 !modules/cardgateklarna/
 !modules/cardgatemc/
+!modules/cardgateonlineueberweisen/
 !modules/cardgatepaypal/
 !modules/cardgatepaysafecard/
 !modules/cardgatepaysafecash/
