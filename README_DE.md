@@ -4,7 +4,7 @@
 
 ## Support
 
-Dieses Modul is geeignet für PrestaShop version **1.7.x** .
+Dieses Modul is geeignet für PrestaShop version **1.7.x**
 
 ## Vorbereitung
 

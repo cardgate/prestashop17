@@ -1,0 +1,16 @@
+{
+  "name": "cardgate/prestashop17",
+  "type": "library",
+  "description": "CardGate payment processing module for OpenCart3",
+  "keywords": [
+    "opencart",
+    "payment",
+    "cardgate",
+    "payment"
+  ],
+  "homepage": "https://www.cardgate.com",
+  "license": "MIT",
+  "autoload": {
+    "psr-4": { "Cardgate\\prestashop17\\" : "" }
+  }
+}

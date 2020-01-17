@@ -2,7 +2,7 @@
 <module>
     <name>cardgateideal</name>
     <displayName><![CDATA[CardGate iDEAL]]></displayName>
-    <version><![CDATA[1.7.9]]></version>
+    <version><![CDATA[1.7.10]]></version>
     <description><![CDATA[Accepteert betalingen met CardGate iDEAL]]></description>
     <author><![CDATA[]]></author>
     <tab><![CDATA[]]></tab>
