@@ -2,7 +2,7 @@
 
 # CardGate module for PrestaShop 1.7+
 
-[![Build Status](https://travis-ci.org/cardgate/opencart3.svg?branch=master)](https://travis-ci.org/cardgate/prestashop17)
+[![Build Status](https://travis-ci.org/cardgate/prestashop17.svg?branch=master)](https://travis-ci.org/cardgate/prestashop17)
 
 ## Support
 

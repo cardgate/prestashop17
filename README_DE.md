@@ -2,6 +2,8 @@
 
 # CardGate Modul für PrestaShop 1.7+
 
+[![Build Status](https://travis-ci.org/cardgate/prestashop17.svg?branch=master)](https://travis-ci.org/cardgate/prestashop17)
+
 ## Support
 
 Dieses Modul is geeignet für PrestaShop version **1.7.x**
