@@ -17,7 +17,7 @@ Gehen zu [**Mein CardGate**](https://my.cardgate.com/) und fragen Sie Ihre Zugan
 
 1. Downloaden und entpacken Sie den aktuellsten **Source Code** auf Ihrem Desktop.
 
-2. Entpacken Sie, und uploaden Sie den Inhalt der **Zip-Datei** in den **Root-Ordner** Ihres Webshops.  
+2. Entpacken Sie, und uploaden Sie den **modules-Ordner**  der **Zip-Datei** in den **Root-Ordner** Ihres Webshops.  
 
 3. Gehen Sie zum Ihrem **Prestashop-Adminbereich**, klicken Sie dann auf **Modules** und wählen Sie **Installed Modules** aus.
 
