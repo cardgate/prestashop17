@@ -163,8 +163,8 @@ if ( $_mr->__isSafe() ) {
 	}
 
     $extraData = explode( '|', $_REQUEST['reference'] );
-    $cartId = $extraData[1];
-    $extraCosts = floatval($extraData[2])/100;
+    $cartId = substr($extraData[0],6);
+    $extraCosts = floatval($extraData[1])/100;
     $total = round(round($_REQUEST['amount']/100,2)- $extraCosts,2);
 
     $cart = new Cart( $cartId );
