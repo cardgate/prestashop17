@@ -4,7 +4,7 @@ use PrestaShop\PrestaShop\Core\Payment\PaymentOption;
 
 class CardgatePayment extends PaymentModule {
 
-    var $version = '1.7.10';
+    var $version = '1.7.11';
     var $tab = 'payments_gateways';
     var $author = 'CardGate';
     var $shop_version = _PS_VERSION_;
@@ -60,12 +60,11 @@ class CardgatePayment extends PaymentModule {
         $paymentOption = new PaymentOption();
         
         $extraCosts = Configuration::get( 'CARDGATE_'.strtoupper( $this->paymentcode).'_EXTRACOST' );
-        
+
+	    $costText = '';
         if ($extraCosts > 0 ){
             $oCurrency = new Currency( $params['cart']->id_currency );
             $costText .= ' + '.$oCurrency->sign.' '.number_format($extraCosts, 2);
-        } else {
-        	$costText = '';
         }
         
         if ($this->paymentcode == 'ideal'){

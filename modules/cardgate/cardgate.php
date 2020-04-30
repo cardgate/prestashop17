@@ -10,7 +10,7 @@ if (! defined ( '_PS_VERSION_' ))
 		var $shop_version = _PS_VERSION_;
 		
 		public function __construct() {
-			Configuration::updateValue ( 'CARDGATE_MODULE_VERSION', '1.7.10' );
+			Configuration::updateValue ( 'CARDGATE_MODULE_VERSION', '1.7.11' );
 			$this->name = 'cardgate';
 			$this->paymentcode = 'cardgate';
 			$this->paymentname = 'CardGate';
@@ -343,7 +343,7 @@ if (! defined ( '_PS_VERSION_' ))
 			
 			$cg_total = number_format ( (($cart->getOrderTotal ( true, Cart::BOTH ) ) * 100)+ $extrafee, 0, '.', '' );
 			
-			$ref = date ( "YmdHis" ) . '|' . $cart->id . '|' . $extrafee;
+			$ref = 'Order ' . $cart->id . '|' . $extrafee;
 			
 			$address = new Address ( $cart->id_address_invoice );
 			$countryObj = new Country ( $address->id_country );
@@ -481,7 +481,7 @@ if (! defined ( '_PS_VERSION_' ))
 			$data ['return_url_failed'] = Tools::getHttpHost ( true, true ) . __PS_BASE_URI__ . 'index.php?controller=order&step=3';
 			$data ['amount'] = $cg_total;
 			$data ['currency'] = $currency->iso_code;
-			$data ['description'] = 'Payment of the account #' . $ref;
+			$data ['description'] = $ref;
 			$data ['ref'] = $ref;
 			$data ['first_name'] = $address->firstname;
 			$data ['last_name'] = $address->lastname;
