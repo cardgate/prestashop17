@@ -21,6 +21,10 @@ modules/*
 !modules/cardgatepaysafecard/
 !modules/cardgatepaysafecash/
 !modules/cardgateprzelewy24/
+!tests/
 !README.md
 !README_DE.md
 !README_NL.md
+!composer.json
+!.travis.yml
+!phpunit.xml.dist

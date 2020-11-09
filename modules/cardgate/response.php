@@ -10,7 +10,8 @@
  *   
  */
 # CONSTANTES
-# 
+#
+
 if ( empty( $_REQUEST['pt'] ) || $_REQUEST['pt'] == '' ) {
     exit( 'invalid request!' );
 } else {
@@ -149,14 +150,21 @@ $_mr = new cardgate_response( $_REQUEST, $option );
 
 if ( $_mr->__isSafe() ) {
 
-
     $option = $_mr->option;
     $payment = 'Cardgate' . $option;
 
     $_cardgate = new $payment();
+
+	global $kernel;
+	if(!$kernel){
+		require_once _PS_ROOT_DIR_.'/app/AppKernel.php';
+		$kernel = new \AppKernel('prod', false);
+		$kernel->boot();
+	}
+
     $extraData = explode( '|', $_REQUEST['reference'] );
-    $cartId = $extraData[1];
-    $extraCosts = floatval($extraData[2])/100;
+    $cartId = substr($extraData[0],6);
+    $extraCosts = floatval($extraData[1])/100;
     $total = round(round($_REQUEST['amount']/100,2)- $extraCosts,2);
 
     $cart = new Cart( $cartId );
@@ -180,15 +188,13 @@ if ( $_mr->__isSafe() ) {
     }
     
     if ( $cart->OrderExists() ) {
-    	
-        $id_order = Order::getOrderByCartId( $cartId );
-        $oOrder = new Order( $id_order );
+        $id_order = Order::getIdByCartId( $cartId );
+        $oOrder = new Order((int) $id_order);
         if ( $oOrder->current_state != _PS_OS_PAYMENT_ && $oOrder->current_state != _PS_OS_ERROR_ ) {
             $oOrder->setCurrentState( $newStatus );
             $oOrder->save();
         }
     } else {
-  
         // update payment total with extra fee before making the order
         switch ( $sStatus ) {
             case 'failed':
@@ -240,17 +246,17 @@ if ( $_mr->__isSafe() ) {
         
         if ( ($sStatus == 'succes') ) {
             $result = $oOrder->addOrderPayment( $oOrder->total_paid_tax_incl, $_cardgate->paymentname, $_REQUEST['transaction_id'] );
-	        $orderPayment = OrderPayment::getByOrderId( $oOrder->id );
+            $orderPayment = OrderPayment::getByOrderId( $oOrder->id );
 
-	        $history = new OrderHistory();
-	        $history->id_order = ( int ) $oOrder->id;
-	        $id_order_state = $newStatus;
-	        $history->changeIdOrderState( ( int ) $id_order_state, $oOrder, $orderPayment );
-	        $res = Db::getInstance()->getRow( '
+            $history = new OrderHistory();
+            $history->id_order = ( int ) $oOrder->id;
+            $id_order_state = $newStatus;
+            $history->changeIdOrderState( ( int ) $id_order_state, $oOrder, $orderPayment );
+            $res = Db::getInstance()->getRow( '
 			SELECT `invoice_number`, `invoice_date`, `delivery_number`, `delivery_date`
 			FROM `' . _DB_PREFIX_ . 'orders`
 			WHERE `id_order` = ' . ( int ) $oOrder->id );
-	        $history->addWithemail();
+            $history->addWithemail();
         }
     }
     echo $_REQUEST['transaction'] . "." . $_REQUEST['code'];

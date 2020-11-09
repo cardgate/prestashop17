@@ -2,6 +2,8 @@
 
 # CardGate module for PrestaShop 1.7+
 
+[![Build Status](https://travis-ci.org/cardgate/prestashop17.svg?branch=master)](https://travis-ci.org/cardgate/prestashop17)
+
 ## Support
 
 This module supports PrestaShop version **1.7.x**
@@ -13,9 +15,9 @@ Please visit [My CardGate](https://my.cardgate.com/) and retrieve your credentia
 
 ## Installation
 
-1. Download and unzip the most recent [source code](https://github.com/cardgate/prestashop17/releases) file on your desktop.
+1. Download and unzip the most recent [cardgate.zip](https://github.com/cardgate/prestashop17/releases) file on your desktop.
 
-2. Unzip the file, and, using FTP, upload the **contents** of the **zip file** to the **root** folder of your website.
+2. Using FTP, upload the **modules** folder to the **root** folder of your website.
 
 3. In your PrestaShop **admin**, go to **Modules**, **Modules Catalog** and **Install** all the CardGate Modules.
 
