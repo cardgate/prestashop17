@@ -127,7 +127,7 @@ class Cardgateklarna extends PaymentModule{
     	$paymentOption = new PaymentOption();
     	
     	$costText = '';
-    	$extraCosts = floatval(Configuration::get( 'CARDGATE_'.strtoupper( $this->paymentcode).'_EXTRACOST' ));
+	    $extraCosts = $this->extraCosts($this->extra_cost);
     	
     	if ($extraCosts > 0 ){
     		$oCurrency = new Currency( $params['cart']->id_currency );
