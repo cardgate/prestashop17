@@ -2,7 +2,7 @@
 <module>
     <name>cardgateafterpay</name>
     <displayName><![CDATA[CardGate Afterpay]]></displayName>
-    <version><![CDATA[1.7.0]]></version>
+    <version><![CDATA[1.7.14]]></version>
     <description><![CDATA[Accepteert betalingen met CardGate  Afterpay]]></description>
     <author><![CDATA[CardGate]]></author>
     <tab><![CDATA[payments_gateways]]></tab>

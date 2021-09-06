@@ -2,11 +2,11 @@
 <module>
     <name>cardgatespraypay</name>
     <displayName><![CDATA[CardGate SprayPay]]></displayName>
-    <version><![CDATA[1.7.10]]></version>
-    <description><![CDATA[Accepteert betalingen met CardGate SprayPay]]></description>
+    <version><![CDATA[1.7.14]]></version>
+    <description><![CDATA[Accepts payments with CardGate SprayPay.]]></description>
     <author><![CDATA[CardGate]]></author>
     <tab><![CDATA[payments_gateways]]></tab>
-	<confirmUninstall><![CDATA[Weet u zeker dat u uw details wilt verwijderen?]]></confirmUninstall>
+	<confirmUninstall><![CDATA[Are you sure you want to delete your details?]]></confirmUninstall>
     <is_configurable>0</is_configurable>
     <need_instance>1</need_instance>
 	<limited_countries></limited_countries>

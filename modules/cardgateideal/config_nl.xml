@@ -2,10 +2,10 @@
 <module>
     <name>cardgateideal</name>
     <displayName><![CDATA[CardGate iDEAL]]></displayName>
-    <version><![CDATA[1.7.10]]></version>
+    <version><![CDATA[1.7.14]]></version>
     <description><![CDATA[Accepteert betalingen met CardGate iDEAL]]></description>
-    <author><![CDATA[]]></author>
-    <tab><![CDATA[]]></tab>
+    <author><![CDATA[CardGate]]></author>
+    <tab><![CDATA[payments_gateways]]></tab>
 	<confirmUninstall><![CDATA[Weet u zeker dat u uw details wilt verwijderen?]]></confirmUninstall>
     <is_configurable>0</is_configurable>
     <need_instance>1</need_instance>

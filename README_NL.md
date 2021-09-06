@@ -18,7 +18,7 @@ of neem contact op met je accountmanager.
 
 1. Download en unzip de meest recente [cardgate.zip](https://github.com/cardgate/prestashop17/releases/) op je bureaublad.
 
-2. Upload de **modules** map via FTP in de **root** map van je website.
+2. Upload de **complete modules** map via FTP in de **root** map van je website.
 
 3. In je PrestaShop **admin**, ga naar **Modules**, **Module Catalog** en **Installeer** alle CardGate modules.
 

@@ -4,7 +4,7 @@ use PrestaShop\PrestaShop\Core\Payment\PaymentOption;
 
 class CardgatePayment extends PaymentModule {
 
-    var $version = '1.7.13';
+    var $version = '1.7.14';
     var $tab = 'payments_gateways';
     var $author = 'CardGate';
     var $shop_version = _PS_VERSION_;
@@ -58,10 +58,10 @@ class CardgatePayment extends PaymentModule {
         }
         
         $paymentOption = new PaymentOption();
-        
-        $extraCosts = Configuration::get( 'CARDGATE_'.strtoupper( $this->paymentcode).'_EXTRACOST' );
 
 	    $costText = '';
+	    $extraCosts = $this->extraCosts($this->extra_cost);
+
         if ($extraCosts > 0 ){
             $oCurrency = new Currency( $params['cart']->id_currency );
             $costText .= ' + '.$oCurrency->sign.' '.number_format($extraCosts, 2);
@@ -118,15 +118,7 @@ class CardgatePayment extends PaymentModule {
         $this->_html = $this->displayConfirmation( $this->l('Settings updated') );
     }
 
-    function get_url() {
-        if ( Configuration::get('CARDGATE_MODE') == 1 ) {
-            return "https://secure-staging.curopayments.net/gateway/cardgate/";
-        } else {
-            return "https://secure.curopayments.net/gateway/cardgate/";
-        }
-    }
-
-    public function paymentData() {   
+    public function paymentData() {
              $data =   [
                     'option' => [
                         'name' => 'option',
@@ -134,7 +126,7 @@ class CardgatePayment extends PaymentModule {
                         'value' => $this->paymentcode,
                     ]
                  ];
-        
+
         return $data;
     }
     
@@ -160,5 +152,4 @@ class CardgatePayment extends PaymentModule {
             return round( $extra_cost, 2 );
         }
     }
-
 }

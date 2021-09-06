@@ -43,7 +43,6 @@ class CardgateidealPaymentModuleFrontController extends ModuleFrontController {
 		
 		$this->context->smarty->assign('issuers', $this->module->getBanks());
                 $this->context->smarty->assign('_url', $this->module->_url);
-                $this->context->smarty->assign('imageurl', $this->module->imageurl);
                 $this->context->smarty->assign('fields', $this->module->paymentData());
                 $this->context->smarty->assign('logoname',$this->module->logoname);
 

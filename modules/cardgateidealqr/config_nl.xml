@@ -2,7 +2,7 @@
 <module>
     <name>cardgateidealqr</name>
     <displayName><![CDATA[CardGate iDEAL QR]]></displayName>
-    <version><![CDATA[1.7.10]]></version>
+    <version><![CDATA[1.7.14]]></version>
     <description><![CDATA[Accepts payments with CardGate iDEAL QR.]]></description>
     <author><![CDATA[CardGate]]></author>
     <tab><![CDATA[payments_gateways]]></tab>

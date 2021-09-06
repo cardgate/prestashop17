@@ -1,16 +1,24 @@
 <?php
 use Symfony\Component\Validator\Constraints\IsNull;
 
+if ( file_exists( dirname( __FILE__ ) . '/../cardgate/cardgate.php') ) {
+	require_once dirname( __FILE__ ) . '/../cardgate/cardgate.php';
+} else {
+	$GLOBALS['CARDGATENOTFOUND']=1;
+	if (!class_exists('CardgatePayment')) { class CardgatePayment extends PaymentModule { function get_url(){} } }
+}
+
 if (! defined ( '_PS_VERSION_' ))
 	exit ();
 	
 	require_once "cardgatepayment.php";
-	class Cardgate extends PaymentModule {
+	
+	class Cardgate extends CardgatePayment {
 		
 		var $shop_version = _PS_VERSION_;
 		
 		public function __construct() {
-			Configuration::updateValue ( 'CARDGATE_MODULE_VERSION', '1.7.13' );
+			Configuration::updateValue ( 'CARDGATE_MODULE_VERSION', '1.7.14' );
 			$this->name = 'cardgate';
 			$this->paymentcode = 'cardgate';
 			$this->paymentname = 'CardGate';
@@ -20,9 +28,7 @@ if (! defined ( '_PS_VERSION_' ))
 			$this->bootstrap = true;
 			$this->currencies = true;
 			$this->currencies_mode = 'radio';
-			
-			$this->imageurl = 'https://gateway.cardgateplus.com/images/logo' . $this->paymentcode . '.gif';
-			
+
 			parent::__construct ();
 			
 			$this->page = basename ( __FILE__, '.php' );
