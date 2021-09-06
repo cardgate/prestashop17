@@ -17,7 +17,7 @@ Please visit [My CardGate](https://my.cardgate.com/) and retrieve your credentia
 
 1. Download and unzip the most recent [cardgate.zip](https://github.com/cardgate/prestashop17/releases) file on your desktop.
 
-2. Using FTP, upload the **modules** folder to the **root** folder of your website.
+2. Using FTP, upload the **complete modules** folder to the **root** folder of your website.
 
 3. In your PrestaShop **admin**, go to **Modules**, **Modules Catalog** and **Install** all the CardGate Modules.
 
