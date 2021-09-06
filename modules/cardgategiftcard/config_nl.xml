@@ -2,8 +2,8 @@
 <module>
     <name>cardgategiftcard</name>
     <displayName><![CDATA[CardGate Gift Card]]></displayName>
-    <version><![CDATA[1.7.0]]></version>
-    <description><![CDATA[Accepteert betalingen met CardGate Gift Card]]></description>
+    <version><![CDATA[1.7.14]]></version>
+    <description><![CDATA[Accepteert betalingen met CardGate Gift Card.]]></description>
     <author><![CDATA[CardGate]]></author>
     <tab><![CDATA[payments_gateways]]></tab>
 	<confirmUninstall><![CDATA[Weet u zeker dat u uw details wilt verwijderen?]]></confirmUninstall>

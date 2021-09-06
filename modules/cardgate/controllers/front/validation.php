@@ -6,7 +6,6 @@ class CardgateValidationModuleFrontController extends ModuleFrontController
      */
     public function postProcess()
     {
-    
         require_once(str_replace('controllers/front','',dirname(__FILE__)).'cardgate-clientlib-php/init.php');
    
         $option = $_REQUEST['option'];
