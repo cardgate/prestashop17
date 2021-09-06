@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <module>
     <name>cardgateonlineueberweisen</name>
-    <displayName><![CDATA[CardGate OnlineÜberweisen]]></displayName>
-    <version><![CDATA[1.7.0]]></version>
-    <description><![CDATA[Accepteert betalingen met CardGate OnlineÜberweisen]]></description>
+    <displayName><![CDATA[CardGate Online&Uuml;berweisen]]></displayName>
+    <version><![CDATA[1.7.14]]></version>
+    <description><![CDATA[Accepts payments with CardGate Online&Uuml;berweisen.]]></description>
     <author><![CDATA[CardGate]]></author>
     <tab><![CDATA[payments_gateways]]></tab>
-	<confirmUninstall><![CDATA[Weet u zeker dat u uw details wilt verwijderen?]]></confirmUninstall>
+	<confirmUninstall><![CDATA[Are you sure you want to delete your details?]]></confirmUninstall>
     <is_configurable>0</is_configurable>
     <need_instance>1</need_instance>
 	<limited_countries></limited_countries>
