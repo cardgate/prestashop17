@@ -39,7 +39,6 @@ class Cardgateafterpay extends CardgatePayment {
         $this->paymentname = 'Afterpay';
         $this->logoname = 'afterpay';
         $this->version = Configuration::get('CARDGATE_MODULE_VERSION');
-        $this->extra_cost = Configuration::get('CARDGATE_' . strtoupper( $this->paymentcode ) . '_EXTRACOST');
         $this->controllers = array('validation');
         $this->is_eu_compatible = 1;
         $this->currencies = true;
@@ -56,17 +55,6 @@ class Cardgateafterpay extends CardgatePayment {
             $this->warning = $this->l('No currency has been set for this module.');
         }
        
-        $total = 0;
-        $rate = 'EUR';
-
-        if ( isset( $GLOBALS['cart'] ) && $GLOBALS['cart']->id_currency > 0 ) {
-            $currency = new Currency( $GLOBALS['cart']->id_currency );
-            $total = round( Tools::convertPrice( $GLOBALS['cart']->getOrderTotal( true, 3 ), $currency ), 2 );
-            $rate = $currency->iso_code;
-        }
-        $id_lang = (!isset( $cookie ) OR ! is_object( $cookie )) ? intval( Configuration::get('PS_LANG_DEFAULT') ) : intval( $cookie->id_lang );
-
-
         if ( isset( $GLOBALS['CARDGATENOTFOUND'] ) )
             $this->warning = $this->l('The CardGate module is not found.');
     }
