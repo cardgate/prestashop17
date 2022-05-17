@@ -18,7 +18,7 @@ if (! defined ( '_PS_VERSION_' ))
 		var $shop_version = _PS_VERSION_;
 		
 		public function __construct() {
-			Configuration::updateValue ( 'CARDGATE_MODULE_VERSION', '1.7.14' );
+			Configuration::updateValue ( 'CARDGATE_MODULE_VERSION', '1.7.15' );
 			$this->name = 'cardgate';
 			$this->paymentcode = 'cardgate';
 			$this->paymentname = 'CardGate';
@@ -142,22 +142,9 @@ if (! defined ( '_PS_VERSION_' ))
 					if ($name != '') {
 						$name = $this->alterName ( $name );
 						$my_modules [] = $name;
-						$my_module_field_names [] = 'CARDGATE_' . strtoupper ( $name ) . '_EXTRACOST';
 						$name = '';
 					}
 				}
-			}
-			$extra_costs = array ();
-			foreach ( $my_modules as $key => $module ) {
-				
-				$extra_costs [] = array (
-						'type' => 'text',
-						'label' => $this->l('Extra cost' ) . ' ' . $module,
-						'name' => $my_module_field_names [$key],
-						'size' => '1',
-						'required' => false,
-						'hint' => $this->l('Add an extra charge for your payment method, for example, 1.95 or 5%' )
-				);
 			}
 			
 			$fields_form [0] ['form'] = array (
@@ -252,9 +239,7 @@ if (! defined ( '_PS_VERSION_' ))
 					)
 					
 			);
-			
-			$fields_form [0] ['form'] ['input'] = array_merge ( $fields_form [0] ['form'] ['input'], $extra_costs );
-			
+
 			$helper = new HelperForm ();
 			
 			// Module, token and currentIndex
@@ -279,8 +264,6 @@ if (! defined ( '_PS_VERSION_' ))
 					)
 			);
 			
-			$extra_costs = array ();
-			
 			if (Tools::isSubmit ( 'submit' . $this->name )) {
 				// get settings from post because post can give errors and you want to keep values
 				$mode = ( string ) Tools::getValue ( 'CARDGATE_TEST_MODE' );
@@ -289,10 +272,6 @@ if (! defined ( '_PS_VERSION_' ))
 				$merchantid = ( string ) Tools::getValue ( 'CARDGATE_MERCHANT_ID' );
 				$merchantapikey = ( string ) TOOLS::getValue ( 'CARDGATE_MERCHANT_API_KEY' );
 				$paymentdisplay = ( string ) TOOLS::getValue ( 'CARDGATE_PAYMENT_DISPLAY' );
-				
-				foreach ( $my_module_field_names as $key => $my_module_field_name ) {
-					$extra_costs [$my_module_field_name] = ( string ) Tools::getValue ( $my_module_field_name );
-				}
 			} else {
 				$mode = Configuration::get ( 'CARDGATE_TEST_MODE' );
 				$siteid = Configuration::get ( 'CARDGATE_SITE_ID' );
@@ -300,9 +279,6 @@ if (! defined ( '_PS_VERSION_' ))
 				$merchantid = Configuration::get ( 'CARDGATE_MERCHANT_ID' );
 				$merchantapikey = Configuration::get ( 'CARDGATE_MERCHANT_API_KEY' );
 				$paymentdisplay = Configuration::get ( 'CARDGATE_PAYMENT_DISPLAY' );
-				foreach ( $my_module_field_names as $key => $my_module_field_name ) {
-					$extra_costs [$my_module_field_name] = Configuration::get ( $my_module_field_name );
-				}
 			}
 			
 			// Load current value
@@ -312,11 +288,7 @@ if (! defined ( '_PS_VERSION_' ))
 			$helper->fields_value ['CARDGATE_MERCHANT_ID'] = $merchantid;
 			$helper->fields_value ['CARDGATE_MERCHANT_API_KEY'] = $merchantapikey;
 			$helper->fields_value ['CARDGATE_PAYMENT_DISPLAY'] = $paymentdisplay;
-			
-			foreach ( $my_module_field_names as $key => $my_module_field_name ) {
-				$helper->fields_value [$my_module_field_name] = $extra_costs [$my_module_field_name];
-			}
-			
+
 			return $helper->generateForm ( $fields_form );
 		}
 		
@@ -328,8 +300,6 @@ if (! defined ( '_PS_VERSION_' ))
 					$name = str_replace ( 'cardgate', '', $module->name );
 					if ($name != '') {
 						$name = $this->alterName ( $name );
-						$my_module_field_names [] = 'CARDGATE_' . strtoupper ( $name ) . '_EXTRACOST';
-						$name = '';
 					}
 				}
 			}
@@ -337,19 +307,12 @@ if (! defined ( '_PS_VERSION_' ))
 		}
 		
 		public function _paymentData($option) {
-		   
-			$moduleName = 'cardgate' . $option;
-			$language = new Language ( $this->context->cart->id_lang );
+            $moduleName = 'cardgate' . $option;
+            $language = new Language ( $this->context->cart->id_lang );
+            $cart = $this->context->cart;
+			$cg_total = number_format ( (($cart->getOrderTotal ( true, Cart::BOTH ) ) * 100), 0, '.', '' );
 			
-			$cart = $this->context->cart;
-			
-			$extrafee = 0;
-			$extrafee = round ( Configuration::get ( 'CARDGATE_' . strtoupper ( $option ) . '_EXTRACOST' ) * 100, 0 );
-			$extrafee = (is_numeric ( $extrafee ) ? $extrafee : 0);
-			
-			$cg_total = number_format ( (($cart->getOrderTotal ( true, Cart::BOTH ) ) * 100)+ $extrafee, 0, '.', '' );
-			
-			$ref = 'Order ' . $cart->id . '|' . $extrafee;
+			$ref = 'Order ' . $cart->id ;
 			
 			$address = new Address ( $cart->id_address_invoice );
 			$countryObj = new Country ( $address->id_country );
@@ -431,19 +394,6 @@ if (! defined ( '_PS_VERSION_' ))
 				}
 			}
 			
-			if ($extrafee > 0) {
-				$item = array ();
-				$item ['quantity'] = 1;
-				$item ['sku'] = 'TRANSACTIONFEE';
-				$item ['name'] = 'Transactie kosten';
-				$item ['price'] = round ( $extrafee , 0 );
-				$item ['vat'] = 0;
-				$item ['vat_amount'] = 0;
-				$item ['vat_inc'] = 1;
-				$item ['type'] = 3;
-				$cartitems [] = $item;
-			}
-			
 			$iProductCorrection = round($cart->getOrderTotal ( false, Cart::BOTH )*100,0) - $iCartItemTotal - $iShippingTotal;
 			
 			if ($iProductCorrection != 0) {
@@ -458,7 +408,7 @@ if (! defined ( '_PS_VERSION_' ))
 				$item ['type'] = 6;
 				$cartitems [] = $item;
 			}
-			$iTaxCorrection = $cg_total - $iCartItemTotal - $iShippingTotal- $iProductCorrection - $iCartItemTaxTotal - $iShippingTaxTotal - $extrafee;
+			$iTaxCorrection = $cg_total - $iCartItemTotal - $iShippingTotal- $iProductCorrection - $iCartItemTaxTotal - $iShippingTaxTotal;
 			if ($iTaxCorrection != 0) {
 				$item = array ();
 				$item ['quantity'] = 1;
@@ -482,9 +432,9 @@ if (! defined ( '_PS_VERSION_' ))
 			$data = array ();
 			$data ['option'] = $option;
 			$data ['language'] = $this->context->language->iso_code;
-			$data ['callback'] = Tools::getHttpHost ( true, true ) . __PS_BASE_URI__ . 'modules/cardgate/response.php';
-			$data ['return_url'] = Tools::getHttpHost ( true, true ) . __PS_BASE_URI__ . 'index.php?controller=order-confirmation&id_cart=' . ( int ) $cart->id . '&key=' . $customer->secure_key . '&id_module=' . $this->id;
-			$data ['return_url_failed'] = Tools::getHttpHost ( true, true ) . __PS_BASE_URI__ . 'index.php?controller=order&step=3';
+			$data ['callback'] = Tools::getHttpHost ( true, true ) . __PS_BASE_URI__ . 'module/cardgate/validation';
+			$data ['return_url'] = Tools::getHttpHost ( true, true ) . __PS_BASE_URI__ . 'index.php?controller=order-confirmation&id_cart=' . ( int ) $cart->id .  '&id_module=' . $this->id . '&key=' . $customer->secure_key;
+            $data ['return_url_failed'] = Tools::getHttpHost ( true, true ) . __PS_BASE_URI__ . 'index.php?controller=order&step=3';
 			$data ['amount'] = $cg_total;
 			$data ['currency'] = $currency->iso_code;
 			$data ['description'] = $ref;
@@ -510,20 +460,5 @@ if (! defined ( '_PS_VERSION_' ))
 			$data ['cartitems'] = $cartitems;
 			
 			return $data;
-		}
-		
-		public function extraCosts($extra_cost) {
-			$cart = $this->context->cart;
-			$total = number_format ( ($cart->getOrderTotal ( true, Cart::BOTH )), 2, '.', '' );
-			if ($extra_cost == 0 || $extra_cost == '') {
-				return 0;
-			}
-			if (strstr ( $extra_cost, '%' )) {
-				$percentage = str_replace ( '%', '', $extra_cost );
-				return round ( ($total * $percentage / 100), 2 );
-			}
-			if (is_numeric ( $extra_cost )) {
-				return round ( $extra_cost, 2 );
-			}
 		}
 	}

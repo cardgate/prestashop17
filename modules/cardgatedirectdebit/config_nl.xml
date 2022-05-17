@@ -2,7 +2,7 @@
 <module>
     <name>cardgatedirectdebit</name>
     <displayName><![CDATA[CardGate DirectDebit]]></displayName>
-    <version><![CDATA[1.7.14]]></version>
+    <version><![CDATA[1.7.15]]></version>
     <description><![CDATA[Accepteert betalingen met CardGate  DirectDebit]]></description>
     <author><![CDATA[CardGate]]></author>
     <tab><![CDATA[payments_gateways]]></tab>

@@ -30,7 +30,7 @@
         <p class="payment_module cardgate">
                 <a href="javascript:void(0)" onclick="$('#cardgate_{$paymentcode}_form').submit();" id="cardgate{$paymentcode}_process_payment" title="{$paymenttext}">
                         <img style="max-width:60px;" src="https://curopayments.com/docs/api/img/logo_{$logoname}.png" alt="ideal" />
-                        {$paymenttext}{if $extracosts != 0}  <span class="">+ &euro; {number_format($extracosts,2,',', '.')}</span> {/if}
+                        {$paymenttext}
                 </a>
         </p>
     </div>

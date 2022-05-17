@@ -2,7 +2,7 @@
 <module>
     <name>cardgatebanktransfer</name>
     <displayName><![CDATA[CardGate Bankoverboeking]]></displayName>
-    <version><![CDATA[1.7.14]]></version>
+    <version><![CDATA[1.7.15]]></version>
     <description><![CDATA[Accepteert betalingen met CardGate Bankoverboeking]]></description>
     <author><![CDATA[CardGate]]></author>
     <tab><![CDATA[payments_gateways]]></tab>
