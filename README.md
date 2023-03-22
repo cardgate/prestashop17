@@ -6,7 +6,7 @@
 
 ## Support
 
-This module supports PrestaShop version **1.7.x**
+This module supports PrestaShop version **1.7 - 1.8.x**
 
 ## Preparation
 
@@ -21,7 +21,7 @@ Please visit [My CardGate](https://my.cardgate.com/) and retrieve your credentia
 
 3. In your PrestaShop **admin**, go to **Modules**, **Modules Catalog** and **Install** all the CardGate Modules.
 
-4. Go to **Modules**, **Module Manager**, where you can see the installed CardGate modules in the **Other** Section.
+4. Go to **Modules**, **Module Manager**, where you can see the installed CardGate modules in the **Payment** Section.
 
 ## Configuration
 

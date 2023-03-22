@@ -6,7 +6,7 @@
 
 ## Support
 
-Deze module is geschikt voor PrestaShop versie **1.7.x**
+Deze module is geschikt voor PrestaShop versie **1.7 - 1.8.x**
 
 ## Voorbereiding
 
@@ -22,7 +22,7 @@ of neem contact op met je accountmanager.
 
 3. In je PrestaShop **admin**, ga naar **Modules**, **Module Catalog** en **Installeer** alle CardGate modules.
 
-4. Ga naar **Modules**, **Modules en services**, waar de CardGate modules zichtbaar moeten zijn in de **Overige** sectie.
+4. Ga naar **Modules**, **Modules en services**, waar de CardGate modules zichtbaar moeten zijn in de **Payment** sectie.
 
 ## Configuratie
 
