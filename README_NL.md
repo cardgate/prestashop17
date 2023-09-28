@@ -20,9 +20,9 @@ of neem contact op met je accountmanager.
 
 2. Upload de **complete modules** map via FTP in de **root** map van je website.
 
-3. In je PrestaShop **admin**, ga naar **Modules**, **Module Catalog** en **Installeer** alle CardGate modules.
+3. In je PrestaShop **admin**, ga naar **Modules**, **Module Catalog** en **Installeer** alle CardGate modules. **NB:** In Prestashop versies 1.7.7.2 en hoger is de **Modules Catalog** niet langer zichtbaar. In dat geval moet je eerst de [PrestaShop MBO](https://github.com/PrestaShopCorp/ps_mbo) installeren, die de **Catalog** zichtbaar zal maken in je **Modules Marketplace.** 
 
-4. Ga naar **Modules**, **Modules en services**, waar de CardGate modules zichtbaar moeten zijn in de **Payment** sectie.
+4. Ga naar **Modules**, **Module Manager**, waar de CardGate modules zichtbaar moeten zijn in de **Payment** sectie.
 
 ## Configuratie
 

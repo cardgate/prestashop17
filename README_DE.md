@@ -19,7 +19,7 @@ Gehen zu [**Mein CardGate**](https://my.cardgate.com/) und fragen Sie Ihre Zugan
 
 2. Uploaden Sie den **Modules-Ordner**  der **Zip-Datei** in den **Root-Ordner** Ihres Webshops.  
 
-3. Gehen Sie zum Ihrem **Prestashop-Adminbereich**, klicken Sie dann auf **Modules** und wählen Sie **Installed Modules** aus.
+3. Gehen Sie zum Ihrem **Prestashop-Adminbereich**, klicken Sie dann auf **Modules** und wählen Sie **Installed Modules** aus. In Prestashop-Versionen 1.7.7.2 und höher wird der **Modulkatalog** nicht mehr angezeigt. In diesem Fall müssen Sie zuerst das [PrestaShop MBO](https://github.com/PrestaShopCorp/ps_mbo) installieren, wodurch der **Katalog** in Ihrem **Modul-Marktplatz** sichtbar wird.
 
 4. Kontrollieren Sie die Version des installierten CardGate Modules.
 
