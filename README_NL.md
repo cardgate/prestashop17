@@ -16,33 +16,22 @@ of neem contact op met je accountmanager.
 
 ## Installatie
 
-1. Download en unzip de meest recente [cardgate.zip](https://github.com/cardgate/prestashop17/releases/) op je bureaublad.
-
-2. Upload de **complete modules** map via FTP in de **root** map van je website.
-
-3. In PrestaShop-versies 1.7.7.2 en hoger wordt de **Modulescatalogus** niet langer weergegeven. In dat geval moet u eerst de [PrestaShop MBO](https://github.com/PrestaShopCorp/ps_mbo) installeren, waardoor de **CardGate-modules** zichtbaar worden in uw **Modules Marketplace**. Ga in uw PrestaShop **admin** naar **Modules**, **Modules Marketplace**, zoek naar **CardGate** en Installeer **alle** CardGate-modules. 
-
-4. Ga naar **Modules**, **Module Manager**, waar de CardGate modules zichtbaar moeten zijn in de **Payment** sectie.
-
+1. In PrestaShop versie 1.7.7.2 en hoger wordt de **Module catalog** niet langer weergegeven. In dat geval moet u eerst de [PrestaShop MBO](https://github.com/PrestaShopCorp/ps_mbo) installeren, waardoor de **CardGate-modules** zichtbaar worden in uw **Modules Marketplace**. (Er zijn verschillende versies voor PrestaShop 1.7.x en Prestashop 1.8.x)
+2. Download en pak het meest recente [cardgate.zip](https://github.com/cardgate/prestashop17/releases) bestand uit op uw bureaublad.
+3. Gebruik FTP om de volledige map **modules** te uploaden en samen te voegen met de map **modules** in de **root** van uw website.
+4. Ga in uw PrestaShop **admin** naar **Modules**, **Modules Marketplace**, zoek op **CardGate**.
+5. Installeer altijd de module **CardGate Bank Common** en de modules voor de CardGate betaalmethoden die u wilt gebruiken.
+6. Ga naar **Modules**, **Module Manager**, waar u de geïnstalleerde CardGate-modules kunt zien in de sectie **Betaling**.
 ## Configuratie
 
-1. Log in op het <b>admin</b> gedeelte van je PrestaShop.  
-
-2. In het linkermenu, bij **Modules**, kies **Modules & Services**, en in het zoekvenster, zoek op **CardGate**.
-
-3. Klik op de **Configureer** knop van de **CardGate Bank algemeen** module.
-
-4. Vul de **site ID** en de **hash key** in, deze kun je vinden bij **Sites** op [Mijn CardGate](https://my.cardgate.com/).
-
-5. Vul de **merchant ID** en **API key** in zoals je die gekregen hebt van je CardGate Account manager.
-
-6. Vul eventueel extra betaalkosten in voor specifieke betaalmethodes.
-
-7. Klik nu op **Opslaan**.
-
-8. Zorg ervoor dat je na het testen bij de **CardGate Bank algemeen** module de **Mode** omschakelt van  
-   **Test Mode** naar **Live mode** en sla het op (**Save**).
-
+1. Log in op de **admin** van uw PrestaShop.
+2. Selecteer in het linkermenu bij **Modules**, **Module Manager** en zoek op **CardGate**.
+3. Klik op de knop **Configureren** van de module **CardGate Bank Common**.
+4. Voer de **site ID** in, en de **hash key** die u kunt vinden bij **Sites** op [Mijn CardGate](https://my.cardgate.com/).
+5. Voer de **merchant ID** en **API key** in, die u van uw CardGate-accountmanager heeft gekregen.
+6. Klik nu op **Opslaan**.
+7. Controleer of de **CardGate-betaalmethoden** die u wilt gebruiken aanwezig zijn in het gedeelte **Betaling**.
+8. Wanneer u **klaar bent met het testen** van de **CardGate Bank Common**-module, zorg er dan voor dat u de **Modus** van **Testmodus** naar **Live-modus** schakelt en deze opslaat ( **Save**).
 ## Vereisten
 
 Geen verdere vereisten.
