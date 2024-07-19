@@ -2,7 +2,7 @@
 <module>
     <name>cardgateklarna</name>
     <displayName><![CDATA[CardGate Klarna]]></displayName>
-    <version><![CDATA[1.7.15]]></version>
+    <version><![CDATA[1.7.16]]></version>
     <description><![CDATA[Accepteert betalingen met CardGate Klarna]]></description>
     <author><![CDATA[CardGate]]></author>
     <tab><![CDATA[payments_gateways]]></tab>
