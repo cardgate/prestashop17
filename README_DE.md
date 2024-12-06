@@ -1,12 +1,12 @@
 ![CardGate](https://cdn.curopayments.net/thumb/200/logos/cardgate.png)
 
-# CardGate Modul für PrestaShop 1.7+
+# CardGate Modul für PrestaShop 1.7+, 8.1+
 
 [![Build Status](https://travis-ci.org/cardgate/prestashop17.svg?branch=master)](https://travis-ci.org/cardgate/prestashop17)
 
 ## Support
 
-Dieses Modul is geeignet für PrestaShop version **1.7 - 1.8.x**
+Dieses Modul is geeignet für PrestaShop version **1.7 - 8.1+**
 
 ## Vorbereitung
 
