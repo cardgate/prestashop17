@@ -18,7 +18,7 @@ if (! defined ( '_PS_VERSION_' ))
 		var $shop_version = _PS_VERSION_;
 		
 		public function __construct() {
-			Configuration::updateValue ( 'CARDGATE_MODULE_VERSION', '1.7.16' );
+			Configuration::updateValue ( 'CARDGATE_MODULE_VERSION', '1.7.17' );
 			$this->name = 'cardgate';
 			$this->paymentcode = 'cardgate';
 			$this->paymentname = 'CardGate';
@@ -110,6 +110,7 @@ if (! defined ( '_PS_VERSION_' ))
 				$merchantid = ( string ) Tools::getValue ( 'CARDGATE_MERCHANT_ID' );
 				$merchantapikey = ( string ) Tools::getValue ( 'CARDGATE_MERCHANT_API_KEY' );
 				$paymentdisplay = ( string ) Tools::getValue ( 'CARDGATE_PAYMENT_DISPLAY' );
+				$showissuers = ( string ) Tools::getValue ( 'CARDGATE_SHOW_ISSUERS' );
 				$my_module_field_names = $this->myModelFieldNames ();
 				foreach ( $my_module_field_names as $key => $my_module_field_name ) {
 					Configuration::updateValue ( $my_module_field_name, ( string ) Tools::getValue ( $my_module_field_name ) );
@@ -122,7 +123,8 @@ if (! defined ( '_PS_VERSION_' ))
 				Configuration::updateValue ( 'CARDGATE_MERCHANT_ID', $merchantid );
 				Configuration::updateValue ( 'CARDGATE_MERCHANT_API_KEY', $merchantapikey );
 				Configuration::updateValue ( 'CARDGATE_PAYMENT_DISPLAY', $paymentdisplay );
-				
+				Configuration::updateValue ( 'CARDGATE_SHOW_ISSUERS', $showissuers );
+
 				// reset iDEAL issuer cache
 				Configuration::updateValue('cardgate_issuer_refresh', 0);
 				
@@ -231,7 +233,28 @@ if (! defined ( '_PS_VERSION_' ))
 											'name' => 'name'
 									),
 									'hint' => $this->l('Choose which display will be used at the checkout' )
-							)
+							),
+                            array (
+                                'type' => 'select',
+                                'label' => $this->l('Show issuers' ),
+                                'name' => 'CARDGATE_SHOW_ISSUERS',
+                                'required' => false,
+                                'default_value' => 0,
+                                'options' => array (
+                                    'query' => array (
+                                        array (
+                                            'id' => 0,
+                                            'name' => 'Without issuers'
+                                        ),
+                                        array (
+                                            'id' => 1,
+                                            'name' => 'With issuers'
+                                        )
+                                    ),
+                                    'id' => 'id',
+                                    'name' => 'name'
+                                )
+                            ),
 					),
 					'submit' => array (
 							'title' => $this->l('Save' ),
@@ -272,6 +295,7 @@ if (! defined ( '_PS_VERSION_' ))
 				$merchantid = ( string ) Tools::getValue ( 'CARDGATE_MERCHANT_ID' );
 				$merchantapikey = ( string ) TOOLS::getValue ( 'CARDGATE_MERCHANT_API_KEY' );
 				$paymentdisplay = ( string ) TOOLS::getValue ( 'CARDGATE_PAYMENT_DISPLAY' );
+				$showissuers = ( string ) TOOLS::getValue ( 'CARDGATE_SHOW_ISSUERS' );
 			} else {
 				$mode = Configuration::get ( 'CARDGATE_TEST_MODE' );
 				$siteid = Configuration::get ( 'CARDGATE_SITE_ID' );
@@ -279,6 +303,7 @@ if (! defined ( '_PS_VERSION_' ))
 				$merchantid = Configuration::get ( 'CARDGATE_MERCHANT_ID' );
 				$merchantapikey = Configuration::get ( 'CARDGATE_MERCHANT_API_KEY' );
 				$paymentdisplay = Configuration::get ( 'CARDGATE_PAYMENT_DISPLAY' );
+				$showissuers = Configuration::get ( 'CARDGATE_SHOW_ISSUERS' );
 			}
 			
 			// Load current value
@@ -288,6 +313,7 @@ if (! defined ( '_PS_VERSION_' ))
 			$helper->fields_value ['CARDGATE_MERCHANT_ID'] = $merchantid;
 			$helper->fields_value ['CARDGATE_MERCHANT_API_KEY'] = $merchantapikey;
 			$helper->fields_value ['CARDGATE_PAYMENT_DISPLAY'] = $paymentdisplay;
+			$helper->fields_value ['CARDGATE_SHOW_ISSUERS'] = $showissuers;
 
 			return $helper->generateForm ( $fields_form );
 		}
