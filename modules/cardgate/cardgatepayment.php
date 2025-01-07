@@ -60,7 +60,7 @@ class CardgatePayment extends PaymentModule {
 
         $costText = '';
 
-        if ($this->paymentcode == 'ideal'){
+        if ( $this->paymentcode == 'ideal' && Configuration::get( 'CARDGATE_SHOW_ISSUERS' ) ){
             $this->smarty->assign(['issuers'=>$this->getBanks(),'selected'=>$issuer]);
             $additionalInformation = $this->fetch('module:cardgateideal/views/templates/front/payment_infos.tpl');
         } else {
@@ -129,10 +129,15 @@ class CardgatePayment extends PaymentModule {
     }
 
     protected function generateForm() {
-        $this->context->smarty->assign([
-            'action' => $this->context->link->getModuleLink($this->name, 'validation', array(), true),
-            'issuers' => $this->getBanks(),
-        ]);
-        return $this->context->smarty->fetch('module:cardgateideal/views/templates/front/payment_form.tpl');
+        if ( Configuration::get( 'CARDGATE_SHOW_ISSUERS' ) ) {
+            $this->context->smarty->assign([
+                'action' => $this->context->link->getModuleLink($this->name, 'validation', array(), true),
+                'issuers' => $this->getBanks(),
+            ]);
+            return $this->context->smarty->fetch('module:cardgateideal/views/templates/front/payment_form.tpl');
+        } else {
+            return false;
+        }
+
     }
 }
