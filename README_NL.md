@@ -1,6 +1,6 @@
 ![CardGate](https://cdn.curopayments.net/thumb/200/logos/cardgate.png)
 
-# CardGate module voor PrestaShop 1.7+, 8.1+
+# CardGate module voor PrestaShop 1.7+, 8.x, 9.x
 
 [![Build Status](https://travis-ci.org/cardgate/prestashop17.svg?branch=master)](https://travis-ci.org/cardgate/prestashop17)
 
