@@ -6,7 +6,7 @@
 
 ## Support
 
-Dieses Modul is geeignet für PrestaShop version **1.7 - 8.1+**
+Dieses Modul is geeignet für PrestaShop version **1.7+, 8.x, 9.x**
 
 ## Vorbereitung
 

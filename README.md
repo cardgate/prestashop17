@@ -6,7 +6,7 @@
 
 ## Support
 
-This module supports PrestaShop version **1.7 - 8.1+**
+This module supports PrestaShop version **1.7+, 8.x, 9.x**
 
 ## Preparation
 
