@@ -18,7 +18,7 @@ if (! defined ( '_PS_VERSION_' ))
 		var $shop_version = _PS_VERSION_;
 		
 		public function __construct() {
-			Configuration::updateValue ( 'CARDGATE_MODULE_VERSION', '1.7.17' );
+			Configuration::updateValue ( 'CARDGATE_MODULE_VERSION', '1.7.18' );
 			$this->name = 'cardgate';
 			$this->paymentcode = 'cardgate';
 			$this->paymentname = 'CardGate';
@@ -110,7 +110,6 @@ if (! defined ( '_PS_VERSION_' ))
 				$merchantid = ( string ) Tools::getValue ( 'CARDGATE_MERCHANT_ID' );
 				$merchantapikey = ( string ) Tools::getValue ( 'CARDGATE_MERCHANT_API_KEY' );
 				$paymentdisplay = ( string ) Tools::getValue ( 'CARDGATE_PAYMENT_DISPLAY' );
-				$showissuers = ( string ) Tools::getValue ( 'CARDGATE_SHOW_ISSUERS' );
 				$my_module_field_names = $this->myModelFieldNames ();
 				foreach ( $my_module_field_names as $key => $my_module_field_name ) {
 					Configuration::updateValue ( $my_module_field_name, ( string ) Tools::getValue ( $my_module_field_name ) );
@@ -123,11 +122,7 @@ if (! defined ( '_PS_VERSION_' ))
 				Configuration::updateValue ( 'CARDGATE_MERCHANT_ID', $merchantid );
 				Configuration::updateValue ( 'CARDGATE_MERCHANT_API_KEY', $merchantapikey );
 				Configuration::updateValue ( 'CARDGATE_PAYMENT_DISPLAY', $paymentdisplay );
-				Configuration::updateValue ( 'CARDGATE_SHOW_ISSUERS', $showissuers );
 
-				// reset iDEAL issuer cache
-				Configuration::updateValue('cardgate_issuer_refresh', 0);
-				
 				$output .= $this->displayConfirmation ( $this->l('Settings updated' ) );
 			}
 			
@@ -234,27 +229,6 @@ if (! defined ( '_PS_VERSION_' ))
 									),
 									'hint' => $this->l('Choose which display will be used at the checkout' )
 							),
-                            array (
-                                'type' => 'select',
-                                'label' => $this->l('Show issuers' ),
-                                'name' => 'CARDGATE_SHOW_ISSUERS',
-                                'required' => false,
-                                'default_value' => 0,
-                                'options' => array (
-                                    'query' => array (
-                                        array (
-                                            'id' => 0,
-                                            'name' => 'Without issuers'
-                                        ),
-                                        array (
-                                            'id' => 1,
-                                            'name' => 'With issuers'
-                                        )
-                                    ),
-                                    'id' => 'id',
-                                    'name' => 'name'
-                                )
-                            ),
 					),
 					'submit' => array (
 							'title' => $this->l('Save' ),

@@ -65,46 +65,4 @@ class Cardgateideal extends CardgatePayment {
 
         if ( isset($GLOBALS['CARDGATENOTFOUND']) ) $this->warning = $this->l('The CardGate module is not found.');
     }
-
-    public function getBanks() {
-        
-        $this->checkIssuers();
-        $sBanks = Configuration::get('cardgate_issuers');
-        $aBanks = unserialize($sBanks);
-        return $aBanks;
-    }
-    
-    public function checkIssuers(){
-        $issuerRefresh = (int) Configuration::get('cardgate_issuer_refresh');
-        if (! $issuerRefresh || $issuerRefresh < time()){
-            $this->fetchIssuers();
-        }
-    }
-    
-    public function fetchIssuers(){
-        try {
-            
-            require_once(str_replace('cardgateideal','',dirname(__FILE__)).'cardgate/cardgate-clientlib-php/init.php');
-            
-            $oCardGate = new cardgate\api\Client( ( int ) Configuration::get('CARDGATE_MERCHANT_ID'), Configuration::get('CARDGATE_MERCHANT_API_KEY'), (Configuration::get('CARDGATE_TEST_MODE') == 1 ? TRUE : FALSE ) );
-            $oCardGate->setIp( $_SERVER['REMOTE_ADDR'] );
-            
-            $aIssuers = $oCardGate->methods()->get( cardgate\api\Method::IDEAL )->getIssuers();
-            $aBanks = array();
-            foreach($aIssuers as $aIssuer){
-                $aBanks[$aIssuer['id']] = $aIssuer['name'];
-            }
-            
-        } catch ( cardgate\api\Exception $oException_ ) {
-            $aBanks[0] = htmlspecialchars( $oException_->getMessage() );
-        }
-        
-        $data = serialize($aBanks);
-
-        if (array_key_exists("INGBNL2A", $aBanks)) {
-	        $iIssuerTime = 24 * 60 * 60 + time();
-	        Configuration::updateValue( 'cardgate_issuer_refresh', $iIssuerTime );
-	        Configuration::updateValue( 'cardgate_issuers', $data );
-        }
-    }
 }
