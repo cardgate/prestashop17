@@ -4,7 +4,7 @@ use PrestaShop\PrestaShop\Core\Payment\PaymentOption;
 
 class CardgatePayment extends PaymentModule {
 
-    var $version = '1.7.17';
+    var $version = '1.7.18';
     var $tab = 'payments_gateways';
     var $author = 'CardGate';
     var $shop_version = _PS_VERSION_;
@@ -50,22 +50,9 @@ class CardgatePayment extends PaymentModule {
             return;
         }
 
-        if (isset($_COOKIE['issuer'])){
-            $issuer = $_COOKIE['issuer'];
-        } else {
-            $issuer = 0;
-        }
-
         $paymentOption = new PaymentOption();
-
         $costText = '';
-
-        if ( $this->paymentcode == 'ideal' && Configuration::get( 'CARDGATE_SHOW_ISSUERS' ) ){
-            $this->smarty->assign(['issuers'=>$this->getBanks(),'selected'=>$issuer]);
-            $additionalInformation = $this->fetch('module:cardgateideal/views/templates/front/payment_infos.tpl');
-        } else {
-            $additionalInformation = null;
-        }
+        $additionalInformation = null;
 
         $display = Configuration::get('CARDGATE_PAYMENT_DISPLAY');
 
@@ -129,15 +116,6 @@ class CardgatePayment extends PaymentModule {
     }
 
     protected function generateForm() {
-        if ( Configuration::get( 'CARDGATE_SHOW_ISSUERS' ) ) {
-            $this->context->smarty->assign([
-                'action' => $this->context->link->getModuleLink($this->name, 'validation', array(), true),
-                'issuers' => $this->getBanks(),
-            ]);
-            return $this->context->smarty->fetch('module:cardgateideal/views/templates/front/payment_form.tpl');
-        } else {
-            return false;
-        }
-
+        return false;
     }
 }

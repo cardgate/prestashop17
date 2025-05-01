@@ -2,7 +2,7 @@
 <module>
     <name>cardgatepaysafecash</name>
     <displayName><![CDATA[CardGate Paysafecash]]></displayName>
-    <version><![CDATA[1.7.17]]></version>
+    <version><![CDATA[1.7.18]]></version>
     <description><![CDATA[Accepteert betalingen met CardGate Paysafecash]]></description>
     <author><![CDATA[CardGate]]></author>
     <tab><![CDATA[payments_gateways]]></tab>

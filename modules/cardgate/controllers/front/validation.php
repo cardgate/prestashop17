@@ -97,10 +97,6 @@ class CardgateValidationModuleFrontController extends ModuleFrontController
 
                 $oTransaction->setPaymentMethod( $oCardGate->methods()->get( $option ) );
 
-                if ( 'ideal' == $option && ! empty ( $_COOKIE['issuer'] ) ) {
-                    $oTransaction->setIssuer( $_COOKIE['issuer'] );
-                }
-
                 // Configure customer.
                 $oConsumer = $oTransaction->getConsumer();
                 $oConsumer->setEmail( $data['email'] );
