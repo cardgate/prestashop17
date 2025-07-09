@@ -46,7 +46,7 @@ if (! defined ( '_PS_VERSION_' ))
 		public function uninstall() {
 			return parent::uninstall ();
 		}
-		
+
 		public function createOrderState() {
 			if (! Configuration::get ( 'CARDGATE_PENDING' )) {
 				

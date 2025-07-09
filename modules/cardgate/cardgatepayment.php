@@ -41,13 +41,37 @@ class CardgatePayment extends PaymentModule {
         return true;
     }
 
+    public function checkPaymentCurrency($currency,$payment_method) {
+        $strictly_euro = in_array($payment_method,['cardgateideal',
+            'cardgateidealqr',
+            'cardgatebancontact',
+            'cardgatebanktransfer',
+            'cardgatebillink',
+            'cardgatesofortbanking',
+            'cardgatedirectdebit',
+            'cardgateonlineueberweisen',
+            'cardgatespraypay']);
+        if ($strictly_euro && $currency != 'EUR') return false;
+
+        $strictly_pln = in_array($payment_method,['cardgateprzelewy24']);
+        if ($strictly_pln && $currency != 'PLN') return false;
+
+        return true;
+    }
+
     public function hookPaymentOptions( $params ) {
 
         if ( !$this->active ) {
-            return;
+            return[];
         }
         if ( !$this->checkCurrency( $params['cart'] ) ) {
-            return;
+            return[];
+        }
+
+        $currency_order = new Currency( $params['cart']->id_currency );
+        $currency       = $currency_order->iso_code;
+        if (!$this->checkPaymentCurrency($currency,$this->name)) {
+            return [];
         }
 
         $paymentOption = new PaymentOption();
@@ -79,6 +103,8 @@ class CardgatePayment extends PaymentModule {
         ];
         return $payment_options;
     }
+
+
 
     public function checkCurrency( $cart ) {
         $currency_order = new Currency( $cart->id_currency );
