@@ -56,7 +56,6 @@ class CardgatePayment extends PaymentModule
             'cardgatebillink',
             'cardgatesofortbanking',
             'cardgatedirectdebit',
-            'cardgateonlineueberweisen',
             'cardgatespraypay']);
         if ($strictly_euro && $currency != 'EUR') {
             return false;
