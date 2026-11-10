@@ -18,15 +18,6 @@ class CardgatePayment extends PaymentModule
         if (!parent::install() || !$this->registerHook('paymentOptions') || !$this->registerHook('paymentReturn')) {
             return false;
         }
-
-        return true;
-
-        $payment = strtoupper($this->paymentcode);
-
-        if (!parent::install() or !$this->registerHook('payment')) {
-            return false;
-        }
-
         return true;
     }
 
@@ -54,7 +45,6 @@ class CardgatePayment extends PaymentModule
             'cardgatebancontact',
             'cardgatebanktransfer',
             'cardgatebillink',
-            'cardgatesofortbanking',
             'cardgatedirectdebit',
             'cardgatespraypay']);
         if ($strictly_euro && $currency != 'EUR') {
