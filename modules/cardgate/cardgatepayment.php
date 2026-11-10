@@ -4,7 +4,7 @@ use PrestaShop\PrestaShop\Core\Payment\PaymentOption;
 
 class CardgatePayment extends PaymentModule
 {
-    public $version = '1.7.22';
+    public $version = '1.7.23';
     public $tab = 'payments_gateways';
     public $author = 'CardGate';
     public $shop_version = _PS_VERSION_;
@@ -18,15 +18,6 @@ class CardgatePayment extends PaymentModule
         if (!parent::install() || !$this->registerHook('paymentOptions') || !$this->registerHook('paymentReturn')) {
             return false;
         }
-
-        return true;
-
-        $payment = strtoupper($this->paymentcode);
-
-        if (!parent::install() or !$this->registerHook('payment')) {
-            return false;
-        }
-
         return true;
     }
 
@@ -54,9 +45,7 @@ class CardgatePayment extends PaymentModule
             'cardgatebancontact',
             'cardgatebanktransfer',
             'cardgatebillink',
-            'cardgatesofortbanking',
             'cardgatedirectdebit',
-            'cardgateonlineueberweisen',
             'cardgatespraypay']);
         if ($strictly_euro && $currency != 'EUR') {
             return false;
